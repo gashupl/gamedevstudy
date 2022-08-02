@@ -2,6 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/src/GameDevStudy/.vs/GameDevStudy/v17
-/src/GameDevStudy/Games/GameDevStudy.Monotris/bin/Debug/net6.0
+/src/GameDevStudy/.vs
+/src/GameDevStudy/Games/GameDevStudy.Monotris/bin/
 /src/GameDevStudy/Games/GameDevStudy.Monotris/obj
