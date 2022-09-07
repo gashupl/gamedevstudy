@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevStudy.Monotris.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 
@@ -12,6 +13,7 @@ namespace GameDevStudy.Monotris
         private int gameResolutionHeigth = 800; //1080;
 
         private SpriteBatch? _spriteBatch;
+        private Wall _wall; 
 
 
         public MonotrisGame()
@@ -48,6 +50,7 @@ namespace GameDevStudy.Monotris
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            _wall = new Wall();
         }
 
         protected override void Update(GameTime gameTime)
