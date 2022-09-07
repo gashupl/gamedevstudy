@@ -8,8 +8,8 @@ namespace GameDevStudy.Monotris
     public class MonotrisGame : Game
     {
         private GraphicsDeviceManager graphics;
-        private int gameResolutionWidth = 1920;
-        private int gameResolutionHeigth = 1080;
+        private int gameResolutionWidth = 1280; //1920;
+        private int gameResolutionHeigth = 800; //1080;
 
         private SpriteBatch? _spriteBatch;
 
@@ -57,7 +57,7 @@ namespace GameDevStudy.Monotris
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkGray);
             base.Draw(gameTime);
         }
     }
