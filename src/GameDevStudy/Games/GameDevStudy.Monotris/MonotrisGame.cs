@@ -13,8 +13,8 @@ namespace GameDevStudy.Monotris
         private int gameResolutionHeigth = 800; //1080;
 
         private SpriteBatch? _spriteBatch;
-        private Wall _wall; 
-
+        private Wall _wall;
+        public Texture2D _wallRectangle;
 
         public MonotrisGame()
         {
@@ -51,17 +51,37 @@ namespace GameDevStudy.Monotris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _wall = new Wall();
+            _wallRectangle = new Texture2D(GraphicsDevice, 1, 1);
+            _wallRectangle.SetData(new[] { Color.Black });
+        }
+
+        protected override void UnloadContent()
+        {
+            base.UnloadContent();
+            _spriteBatch?.Dispose();
+            _wallRectangle.Dispose();
         }
 
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            //Handle input
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkGray);
             base.Draw(gameTime);
+
+            if(_spriteBatch != null)
+            {
+                _spriteBatch.Begin();
+                _spriteBatch.Draw(_wallRectangle, new Rectangle(0, 0, 500, 500),
+                        Color.Black);
+                _spriteBatch.End();
+            }
+
         }
     }
 }
