@@ -14,7 +14,7 @@ namespace GameDevStudy.Monotris
 
         private SpriteBatch? _spriteBatch;
         private Wall _wall;
-        public Texture2D _wallRectangle;
+        
 
         public MonotrisGame()
         {
@@ -50,16 +50,14 @@ namespace GameDevStudy.Monotris
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _wall = new Wall();
-            _wallRectangle = new Texture2D(GraphicsDevice, 1, 1);
-            _wallRectangle.SetData(new[] { Color.Black });
+            _wall = new Wall(GraphicsDevice);
         }
 
         protected override void UnloadContent()
         {
             base.UnloadContent();
             _spriteBatch?.Dispose();
-            _wallRectangle.Dispose();
+            _wall.Dispose(); 
         }
 
         protected override void Update(GameTime gameTime)
@@ -77,8 +75,7 @@ namespace GameDevStudy.Monotris
             if(_spriteBatch != null)
             {
                 _spriteBatch.Begin();
-                _spriteBatch.Draw(_wallRectangle, new Rectangle(0, 0, 500, 500),
-                        Color.Black);
+                _wall.Draw(_spriteBatch, gameTime); 
                 _spriteBatch.End();
             }
 

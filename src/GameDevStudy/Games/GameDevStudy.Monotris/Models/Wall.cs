@@ -1,28 +1,34 @@
-﻿using Microsoft.Xna.Framework; 
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.Models
 {
-    internal class Wall
+    //TODO: Split calculation and drawing logic into separate classes
+    internal class Wall : ScreenElement, IDisposable
     {
         private bool[,] _matrix;
-        private Point _leftDownCornerLocation;
-        private int _wallBlockSize = 20; 
+        private Point _leftTopCornerLocation = new Point(20, 50);
+        private int _wallBlockSize = 35;
+        private int _xBlocksCount = 10; 
+        private int _yBlocksCount = 20;
+        private Texture2D _wallRectangle;
 
-        internal Wall()
+        internal Wall(GraphicsDevice graphicsDevice)
         {
-            _matrix = new bool[10, 20];
-            _leftDownCornerLocation = new Point(10,10);
+            _matrix = new bool[_xBlocksCount, _yBlocksCount];
+            _wallRectangle = new Texture2D(graphicsDevice, 1, 1);
+            _wallRectangle.SetData(new[] { Color.Black });
         }
 
-        internal Wall(Point leftDownCornerLocation)
+        public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
-            _matrix = new bool[10,20];
-            _leftDownCornerLocation = leftDownCornerLocation;  
-        }
-
-        internal Wall(Point leftDownCornerLocation, int width, int height)
-        {
-            _matrix = new bool[width, height];
+            _spriteBatch.Draw(_wallRectangle, 
+                new Rectangle(
+                    _leftTopCornerLocation.X,
+                    _leftTopCornerLocation.Y,
+                    _wallBlockSize * _xBlocksCount, 
+                    _wallBlockSize * _yBlocksCount), 
+                Color.Black);
         }
 
         public void AddShape(Shape shape)
@@ -48,6 +54,11 @@ namespace GameDevStudy.Monotris.Models
         private void removeLines(int[] linesNumbers)
         {
 
+        }
+
+        public void Dispose()
+        {
+            _wallRectangle.Dispose();
         }
     }
 }
