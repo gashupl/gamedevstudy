@@ -9,6 +9,7 @@ namespace GameDevStudy.Monotris.Models
     internal enum Direction
     {
         Left, 
-        Right
+        Right, 
+        Down
     }
 }

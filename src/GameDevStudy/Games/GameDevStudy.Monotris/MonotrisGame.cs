@@ -14,7 +14,7 @@ namespace GameDevStudy.Monotris
 
         private SpriteBatch? _spriteBatch;
         private Wall _wall;
-        
+        private DateTime _lastUpdate = DateTime.Now; 
 
         public MonotrisGame()
         {
@@ -64,7 +64,14 @@ namespace GameDevStudy.Monotris
         {
             base.Update(gameTime);
 
-            //Handle input
+            //TODO: Handle input
+
+            if((DateTime.Now - _lastUpdate).TotalSeconds > 1)
+            {
+                _wall.MoveActiveShape(Direction.Down);
+                _lastUpdate = DateTime.Now; 
+            }
+
         }
 
         protected override void Draw(GameTime gameTime)
