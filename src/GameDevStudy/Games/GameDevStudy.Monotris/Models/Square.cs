@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameDevStudy.Monotris.Models
 {
-    internal enum Direction
+    internal class Square
     {
-        Left, 
-        Right, 
-        Down
     }
 }

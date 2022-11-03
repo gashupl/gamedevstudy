@@ -17,6 +17,9 @@ namespace GameDevStudy.Monotris.Models
         private bool[,] _matrix;
         private Point _leftTopCornerLocation = new Point(20, 50);
 
+        private int _activeBlockX = 0;
+        private int _activeBlockY = 0;  
+
         internal Wall(GraphicsDevice graphicsDevice)
         {
             _matrix = new bool[_xBlocksCount, _yBlocksCount];
@@ -30,7 +33,7 @@ namespace GameDevStudy.Monotris.Models
 
         public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
-            _matrix[0, 0] = true;
+            _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape
             _matrix[9, 19] = true;
             DrawWall(_spriteBatch); 
         }
@@ -45,9 +48,14 @@ namespace GameDevStudy.Monotris.Models
             throw new NotImplementedException();
         }
 
-        public void MoveActiveShape(Direction direction)
+        public void MoveActiveShape(Direction? direction = null)
         {
-            throw new NotImplementedException();
+            if(_activeBlockY < _yBlocksCount - 1)
+            {
+                _matrix[_activeBlockX, _activeBlockY] = false; //clear current active block
+                _activeBlockY += 1;
+            }
+ 
         }
 
         public void LowerActiveShape()
