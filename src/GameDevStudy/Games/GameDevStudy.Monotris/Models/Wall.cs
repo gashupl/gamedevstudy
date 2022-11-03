@@ -17,7 +17,7 @@ namespace GameDevStudy.Monotris.Models
         private bool[,] _matrix;
         private Point _leftTopCornerLocation = new Point(20, 50);
 
-        private int _activeBlockX = 0;
+        private int _activeBlockX = 4;
         private int _activeBlockY = 0;  
 
         internal Wall(GraphicsDevice graphicsDevice)
@@ -50,10 +50,20 @@ namespace GameDevStudy.Monotris.Models
 
         public void MoveActiveShape(Direction? direction = null)
         {
-            if(_activeBlockY < _yBlocksCount - 1)
+            if(direction == Direction.Down && _activeBlockY < _yBlocksCount - 1)
             {
-                _matrix[_activeBlockX, _activeBlockY] = false; //clear current active block
+                ClearCurrentActiveBlock();
                 _activeBlockY += 1;
+            }
+            else if(direction == Direction.Left && _activeBlockX > 0)
+            {
+                ClearCurrentActiveBlock(); 
+                _activeBlockX -= 1;
+            }
+            else if(direction == Direction.Right && _activeBlockX < _xBlocksCount - 1)
+            {
+                ClearCurrentActiveBlock();
+                _activeBlockX += 1; 
             }
  
         }
@@ -61,6 +71,16 @@ namespace GameDevStudy.Monotris.Models
         public void LowerActiveShape()
         {
             throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            _wallRectangle.Dispose();
+        }
+
+        private void ClearCurrentActiveBlock()
+        {
+            _matrix[_activeBlockX, _activeBlockY] = false;
         }
 
         private void RemoveLines(int[] linesNumbers)
@@ -117,9 +137,5 @@ namespace GameDevStudy.Monotris.Models
             _matrix[x, y] = false;
         }
 
-        public void Dispose()
-        {
-            _wallRectangle.Dispose();
-        }
     }
 }
