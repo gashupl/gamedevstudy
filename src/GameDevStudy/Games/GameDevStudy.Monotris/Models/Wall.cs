@@ -50,7 +50,7 @@ namespace GameDevStudy.Monotris.Models
 
         public void MoveActiveShape(Direction? direction = null)
         {
-            if(direction == Direction.Down && _activeBlockY < _yBlocksCount - 1)
+            if(direction == Direction.Down && IsNextDownMoveAllowed())
             {
                 ClearCurrentActiveBlock();
                 _activeBlockY += 1;
@@ -81,6 +81,11 @@ namespace GameDevStudy.Monotris.Models
         private void ClearCurrentActiveBlock()
         {
             _matrix[_activeBlockX, _activeBlockY] = false;
+        }
+
+        private bool IsNextDownMoveAllowed()
+        {
+            return _activeBlockY < _yBlocksCount - 1 && !_matrix[_activeBlockX, _activeBlockY + 1]; 
         }
 
         private void RemoveLines(int[] linesNumbers)
