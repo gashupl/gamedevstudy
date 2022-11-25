@@ -17,11 +17,13 @@ namespace GameDevStudy.Monotris.Models
         private bool[,] _matrix;
         private Point _leftTopCornerLocation = new Point(20, 50);
 
-        private int _activeBlockX = 4;
-        private int _activeBlockY = 0;  
+        private int _activeBlockX;
+        private int _activeBlockY;  
 
         internal Wall(GraphicsDevice graphicsDevice)
         {
+            SetInitialActiveBlockCoordinates(); 
+
             _matrix = new bool[_xBlocksCount, _yBlocksCount];
             
             _wallRectangle = new Texture2D(graphicsDevice, 1, 1);
@@ -50,10 +52,18 @@ namespace GameDevStudy.Monotris.Models
 
         public void MoveActiveShape(Direction? direction = null)
         {
-            if(direction == Direction.Down && IsNextDownMoveAllowed())
+            if(direction == Direction.Down)
             {
-                ClearCurrentActiveBlock();
-                _activeBlockY += 1;
+                if (IsNextDownMoveAllowed())
+                {
+                    ClearCurrentActiveBlock();
+                    _activeBlockY += 1;
+                }
+                else
+                {
+                    _matrix[_activeBlockX, _activeBlockY] = true;
+                    SetInitialActiveBlockCoordinates(); 
+                }          
             }
             else if(direction == Direction.Left && _activeBlockX > 0)
             {
@@ -76,6 +86,12 @@ namespace GameDevStudy.Monotris.Models
         public void Dispose()
         {
             _wallRectangle.Dispose();
+        }
+
+        private void SetInitialActiveBlockCoordinates()
+        {
+            _activeBlockX = 4;
+            _activeBlockY = 0;
         }
 
         private void ClearCurrentActiveBlock()
