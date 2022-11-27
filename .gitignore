@@ -5,3 +5,5 @@
 /src/GameDevStudy/.vs
 /src/GameDevStudy/Games/GameDevStudy.Monotris/bin/
 /src/GameDevStudy/Games/GameDevStudy.Monotris/obj
+/src/GameDevStudy/Games/GameDevStudy.Monotris.Tests/bin/Debug/net6.0
+/src/GameDevStudy/Games/GameDevStudy.Monotris.Tests/obj

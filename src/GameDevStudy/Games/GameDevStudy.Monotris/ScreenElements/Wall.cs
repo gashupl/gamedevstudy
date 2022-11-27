@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevStudy.Monotris.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevStudy.Monotris.Models
+namespace GameDevStudy.Monotris.ScreenElements
 {
     //TODO: Split calculation and drawing logic into separate classes
     internal class Wall : ScreenElement, IDisposable
@@ -75,7 +76,39 @@ namespace GameDevStudy.Monotris.Models
                 ClearCurrentActiveBlock();
                 _activeBlockX += 1; 
             }
- 
+        }
+
+        public IsLineCompletedDto IsLineCompleted()
+        {
+            var completedLines = new List<int>(); 
+            for(int y = 0; y < _yBlocksCount; y++)
+            {
+                var isCompleted = true; 
+                for(int x = 0; x < _xBlocksCount; x++)
+                {
+                    if(_matrix[x,y] == false)
+                    {
+                        isCompleted = false;
+                        break; 
+                    }
+                }
+                if (isCompleted)
+                {
+                    completedLines.Add(y);
+                }
+            }
+
+            return new IsLineCompletedDto()
+            {
+                IsLineCompleted = (completedLines.Count > 0),
+                CompletedLinesYCoordinates = completedLines
+
+            }; 
+        }
+
+        public void RemoveCompletedLine()
+        {
+
         }
 
         public void LowerActiveShape()

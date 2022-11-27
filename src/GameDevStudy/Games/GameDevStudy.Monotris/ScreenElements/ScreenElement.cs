@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameDevStudy.Monotris.Models
+namespace GameDevStudy.Monotris.ScreenElements
 {
     internal abstract class ScreenElement
     {

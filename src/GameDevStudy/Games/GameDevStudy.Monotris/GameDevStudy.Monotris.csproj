@@ -10,6 +10,9 @@
   <ItemGroup>
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
     <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+		  <_Parameter1>GameDevStudy.Monotris.Tests</_Parameter1>
+	  </AssemblyAttribute>
   </ItemGroup>
 
 </Project>
