@@ -78,15 +78,15 @@ namespace GameDevStudy.Monotris.ScreenElements
             }
         }
 
-        public IsLineCompletedDto IsLineCompleted()
+        public static IsLineCompletedDto IsLineCompleted(bool[,] wallMatrix, int xBlocksCount, int yBlocksCount)
         {
             var completedLines = new List<int>(); 
-            for(int y = 0; y < _yBlocksCount; y++)
+            for(int y = 0; y < yBlocksCount; y++)
             {
                 var isCompleted = true; 
-                for(int x = 0; x < _xBlocksCount; x++)
+                for(int x = 0; x < xBlocksCount; x++)
                 {
-                    if(_matrix[x,y] == false)
+                    if(wallMatrix[x,y] == false)
                     {
                         isCompleted = false;
                         break; 

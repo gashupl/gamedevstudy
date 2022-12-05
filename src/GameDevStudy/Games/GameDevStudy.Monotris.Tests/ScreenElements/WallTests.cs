@@ -1,6 +1,4 @@
-﻿
-using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
 using Xunit;
 
 namespace GameDevStudy.Monotris.ScreenElements
@@ -11,14 +9,36 @@ namespace GameDevStudy.Monotris.ScreenElements
         [Fact]
         public void IsLineCompleted_Yes_()
         {
-            throw new NotImplementedException(); 
+            var xBlocksCount = 5;
+            var yBlocksCount = 10; 
+            var blocksMatrix = new bool[xBlocksCount, yBlocksCount];
+
+            for(var i = 0; i < xBlocksCount; i++)
+            {
+                blocksMatrix[i, 0] = true;
+            }
+            
+            var result = Wall.IsLineCompleted(blocksMatrix, xBlocksCount, yBlocksCount);
+
+            Assert.True(result.IsLineCompleted); 
         }
 
 
         [Fact]
         public void IsLineCompleted_No()
         {
-            throw new NotImplementedException();
+            var xBlocksCount = 5;
+            var yBlocksCount = 10;
+            var blocksMatrix = new bool[xBlocksCount, yBlocksCount];
+
+            for (var i = 0; i < xBlocksCount - 1; i++)
+            {
+                blocksMatrix[i, 0] = true;
+            }
+
+            var result = Wall.IsLineCompleted(blocksMatrix, xBlocksCount, yBlocksCount);
+
+            Assert.False(result.IsLineCompleted);
         }
     }
 }
