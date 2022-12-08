@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.ScreenElements
 {
-    //TODO: Split calculation and drawing logic into separate classes
+    //TODO: This class is too big to be called "model". Should be splitted into smaller ones
     internal class Wall : ScreenElement, IDisposable
     {
         private const int _wallBlockSize = 35;
@@ -78,6 +78,14 @@ namespace GameDevStudy.Monotris.ScreenElements
             }
         }
 
+        //TODO: Change into property
+        public bool IsLineCompleted()
+        {
+            return Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount).IsLineCompleted; 
+        }
+
+
+        //TODO: Static public method called only internally (this design should be changed)
         public static IsLineCompletedDto IsLineCompleted(bool[,] wallMatrix, int xBlocksCount, int yBlocksCount)
         {
             var completedLines = new List<int>(); 
@@ -106,9 +114,34 @@ namespace GameDevStudy.Monotris.ScreenElements
             }; 
         }
 
-        public void RemoveCompletedLine()
+        //TODO: To be tested
+        public void RemoveCompletedLines()
         {
+            var completedLines = Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount)
+                .CompletedLinesYCoordinates;
 
+            //Checking completed lines from top to the bottm 
+            for (int y = _yBlocksCount - 1; y == 0; y--)
+            {
+                if (completedLines.Contains(y))
+                {
+                    //Clean current line 
+                    for (int x = 0; x < _xBlocksCount; x++)
+                    {
+                        _matrix[x, y] = false; 
+                    }
+
+                    //Move all the line from top till removed line 1 down
+                    for (int _y = _yBlocksCount - 1; _y == y; _y--)
+                    {
+                        for (int x = 0; x < _xBlocksCount; x++)
+                        {
+                            _matrix[x, y] = _matrix[x, y + 1];
+                            _matrix[x, y + 1] = false; 
+                        }
+                    }
+                }
+            }
         }
 
         public void LowerActiveShape()

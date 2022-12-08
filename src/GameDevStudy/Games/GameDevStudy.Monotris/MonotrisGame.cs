@@ -66,29 +66,39 @@ namespace GameDevStudy.Monotris
         {
             base.Update(gameTime);
 
-            if((DateTime.Now - _lastUpdate).TotalSeconds > 1)
+            if (!_wall.IsLineCompleted())
             {
-                _wall.MoveActiveShape(Direction.Down);
-                _lastUpdate = DateTime.Now;
-            }
-
-            if((DateTime.Now - _lastMove).TotalSeconds > 0.2)
-            {
-                var keyBoardState = Keyboard.GetState();
-                if (keyBoardState.IsKeyDown(Keys.Left))
-                {
-                    _wall.MoveActiveShape(Direction.Left);
-                }
-                else if (keyBoardState.IsKeyDown(Keys.Right))
-                {
-                    _wall.MoveActiveShape(Direction.Right);
-                }
-                else if (keyBoardState.IsKeyDown(Keys.Down))
+                if ((DateTime.Now - _lastUpdate).TotalSeconds > 1)
                 {
                     _wall.MoveActiveShape(Direction.Down);
+                    _lastUpdate = DateTime.Now;
                 }
-                _lastMove = DateTime.Now;
+
+                if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
+                {
+                    var keyBoardState = Keyboard.GetState();
+                    if (keyBoardState.IsKeyDown(Keys.Left))
+                    {
+                        _wall.MoveActiveShape(Direction.Left);
+                    }
+                    else if (keyBoardState.IsKeyDown(Keys.Right))
+                    {
+                        _wall.MoveActiveShape(Direction.Right);
+                    }
+                    else if (keyBoardState.IsKeyDown(Keys.Down))
+                    {
+                        _wall.MoveActiveShape(Direction.Down);
+                    }
+                    _lastMove = DateTime.Now;
+                }
             }
+            else
+            {
+                //TODO: Wait 0,2 sec. 
+                _wall.RemoveCompletedLines(); 
+                //TODO: Wait 0,2 sec. 
+            }
+
         }
 
         protected override void Draw(GameTime gameTime)
