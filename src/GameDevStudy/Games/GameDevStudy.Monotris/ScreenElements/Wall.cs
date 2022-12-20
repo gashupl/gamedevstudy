@@ -32,12 +32,18 @@ namespace GameDevStudy.Monotris.ScreenElements
 
             _blockRectangle = new Texture2D(graphicsDevice, 1, 1);
             _blockRectangle.SetData(new[] { _blockColor });
+
+            //TODO: This is only for testing puropses
+            //Set initial state of matrix not to waste time for filling empty space
+            for (int i = 0; i < 9; i++)
+            {
+                _matrix[i, 19] = true;
+            }
         }
 
         public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
-            _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape
-            _matrix[9, 19] = true;
+            _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape      
             DrawWall(_spriteBatch); 
         }
 
@@ -114,14 +120,14 @@ namespace GameDevStudy.Monotris.ScreenElements
             }; 
         }
 
-        //TODO: To be tested
+        //TODO 1: The last set block remains in the wall after line is removed. Shoud be fixed
         public void RemoveCompletedLines()
         {
             var completedLines = Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount)
                 .CompletedLinesYCoordinates;
 
             //Checking completed lines from top to the bottm 
-            for (int y = _yBlocksCount - 1; y == 0; y--)
+            for (int y = _yBlocksCount - 1; y >= 0; y--)
             {
                 if (completedLines.Contains(y))
                 {
@@ -132,12 +138,12 @@ namespace GameDevStudy.Monotris.ScreenElements
                     }
 
                     //Move all the line from top till removed line 1 down
-                    for (int _y = _yBlocksCount - 1; _y == y; _y--)
+                    for (int _y = y; _y > 0; _y--)
                     {
                         for (int x = 0; x < _xBlocksCount; x++)
                         {
-                            _matrix[x, y] = _matrix[x, y + 1];
-                            _matrix[x, y + 1] = false; 
+                            _matrix[x, _y] = _matrix[x, _y - 1];
+                            _matrix[x, _y - 1] = false; 
                         }
                     }
                 }

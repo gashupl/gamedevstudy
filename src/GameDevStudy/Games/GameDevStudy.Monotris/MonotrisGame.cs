@@ -94,9 +94,11 @@ namespace GameDevStudy.Monotris
             }
             else
             {
-                //TODO: Wait 0,2 sec. 
-                _wall.RemoveCompletedLines(); 
-                //TODO: Wait 0,2 sec. 
+                if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
+                {
+                    _wall.RemoveCompletedLines();
+                    _lastMove = DateTime.Now;
+                }
             }
 
         }
