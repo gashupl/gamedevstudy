@@ -24,7 +24,7 @@ namespace GameDevStudy.Monotris.ScreenElements
         internal Wall(GraphicsDevice graphicsDevice)
         {
             SetInitialActiveBlockCoordinates(); 
-
+            
             _matrix = new bool[_xBlocksCount, _yBlocksCount];
             
             _wallRectangle = new Texture2D(graphicsDevice, 1, 1);
@@ -35,10 +35,11 @@ namespace GameDevStudy.Monotris.ScreenElements
 
             //TODO: This is only for testing puropses
             //Set initial state of matrix not to waste time for filling empty space
-            for (int i = 0; i < 9; i++)
-            {
-                _matrix[i, 19] = true;
-            }
+            //for (int i = 1; i < 10; i++)
+            //{
+            //    _matrix[i, 19] = true;
+            //}
+            
         }
 
         public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
@@ -90,8 +91,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             return Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount).IsLineCompleted; 
         }
 
-
-        //TODO: Static public method called only internally (this design should be changed)
         public static IsLineCompletedDto IsLineCompleted(bool[,] wallMatrix, int xBlocksCount, int yBlocksCount)
         {
             var completedLines = new List<int>(); 
@@ -148,6 +147,8 @@ namespace GameDevStudy.Monotris.ScreenElements
                     }
                 }
             }
+
+            SetInitialActiveBlockCoordinates(); 
         }
 
         public void LowerActiveShape()
