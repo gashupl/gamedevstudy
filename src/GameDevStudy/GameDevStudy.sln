@@ -5,7 +5,9 @@ VisualStudioVersion = 17.0.31919.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{46CCC533-872F-4BE0-BBFE-915024B5694E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDevStudy.Monotris", "Games\GameDevStudy.Monotris\GameDevStudy.Monotris.csproj", "{D9F7E27C-D1E2-40D0-B503-02F185AF5A05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameDevStudy.Monotris", "Games\GameDevStudy.Monotris\GameDevStudy.Monotris.csproj", "{D9F7E27C-D1E2-40D0-B503-02F185AF5A05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDevStudy.Monotris.Tests", "Games\GameDevStudy.Monotris.Tests\GameDevStudy.Monotris.Tests.csproj", "{4A9A1E27-2865-4AAD-80B4-619318E89BA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +19,17 @@ Global
 		{D9F7E27C-D1E2-40D0-B503-02F185AF5A05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9F7E27C-D1E2-40D0-B503-02F185AF5A05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9F7E27C-D1E2-40D0-B503-02F185AF5A05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A9A1E27-2865-4AAD-80B4-619318E89BA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A9A1E27-2865-4AAD-80B4-619318E89BA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A9A1E27-2865-4AAD-80B4-619318E89BA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A9A1E27-2865-4AAD-80B4-619318E89BA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D9F7E27C-D1E2-40D0-B503-02F185AF5A05} = {46CCC533-872F-4BE0-BBFE-915024B5694E}
+		{4A9A1E27-2865-4AAD-80B4-619318E89BA3} = {46CCC533-872F-4BE0-BBFE-915024B5694E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE234E18-1204-47D2-A2D7-C73325B26FF6}

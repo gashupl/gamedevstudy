@@ -1,8 +1,8 @@
 ﻿using GameDevStudy.Monotris.Models;
+using GameDevStudy.Monotris.ScreenElements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 
 
 namespace GameDevStudy.Monotris
@@ -66,29 +66,41 @@ namespace GameDevStudy.Monotris
         {
             base.Update(gameTime);
 
-            if((DateTime.Now - _lastUpdate).TotalSeconds > 1)
+            if (!_wall.IsLineCompleted())
             {
-                _wall.MoveActiveShape(Direction.Down);
-                _lastUpdate = DateTime.Now;
-            }
-
-            if((DateTime.Now - _lastMove).TotalSeconds > 0.2)
-            {
-                var keyBoardState = Keyboard.GetState();
-                if (keyBoardState.IsKeyDown(Keys.Left))
-                {
-                    _wall.MoveActiveShape(Direction.Left);
-                }
-                else if (keyBoardState.IsKeyDown(Keys.Right))
-                {
-                    _wall.MoveActiveShape(Direction.Right);
-                }
-                else if (keyBoardState.IsKeyDown(Keys.Down))
+                if ((DateTime.Now - _lastUpdate).TotalSeconds > 1)
                 {
                     _wall.MoveActiveShape(Direction.Down);
+                    _lastUpdate = DateTime.Now;
                 }
-                _lastMove = DateTime.Now;
+
+                if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
+                {
+                    var keyBoardState = Keyboard.GetState();
+                    if (keyBoardState.IsKeyDown(Keys.Left))
+                    {
+                        _wall.MoveActiveShape(Direction.Left);
+                    }
+                    else if (keyBoardState.IsKeyDown(Keys.Right))
+                    {
+                        _wall.MoveActiveShape(Direction.Right);
+                    }
+                    else if (keyBoardState.IsKeyDown(Keys.Down))
+                    {
+                        _wall.MoveActiveShape(Direction.Down);
+                    }
+                    _lastMove = DateTime.Now;
+                }
             }
+            else
+            {
+                if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
+                {
+                    _wall.RemoveCompletedLines();
+                    _lastMove = DateTime.Now;
+                }
+            }
+
         }
 
         protected override void Draw(GameTime gameTime)

@@ -1,9 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevStudy.Monotris.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace GameDevStudy.Monotris.Models
+namespace GameDevStudy.Monotris.ScreenElements
 {
-    //TODO: Split calculation and drawing logic into separate classes
+    //TODO: This class is too big to be called "model". Should be splitted into smaller ones
     internal class Wall : ScreenElement, IDisposable
     {
         private const int _wallBlockSize = 35;
@@ -23,7 +24,7 @@ namespace GameDevStudy.Monotris.Models
         internal Wall(GraphicsDevice graphicsDevice)
         {
             SetInitialActiveBlockCoordinates(); 
-
+            
             _matrix = new bool[_xBlocksCount, _yBlocksCount];
             
             _wallRectangle = new Texture2D(graphicsDevice, 1, 1);
@@ -31,12 +32,19 @@ namespace GameDevStudy.Monotris.Models
 
             _blockRectangle = new Texture2D(graphicsDevice, 1, 1);
             _blockRectangle.SetData(new[] { _blockColor });
+
+            //TODO: This is only for testing puropses
+            //Set initial state of matrix not to waste time for filling empty space
+            //for (int i = 1; i < 10; i++)
+            //{
+            //    _matrix[i, 19] = true;
+            //}
+            
         }
 
         public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
-            _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape
-            _matrix[9, 19] = true;
+            _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape      
             DrawWall(_spriteBatch); 
         }
 
@@ -75,7 +83,72 @@ namespace GameDevStudy.Monotris.Models
                 ClearCurrentActiveBlock();
                 _activeBlockX += 1; 
             }
- 
+        }
+
+        //TODO: Change into property
+        public bool IsLineCompleted()
+        {
+            return Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount).IsLineCompleted; 
+        }
+
+        public static IsLineCompletedDto IsLineCompleted(bool[,] wallMatrix, int xBlocksCount, int yBlocksCount)
+        {
+            var completedLines = new List<int>(); 
+            for(int y = 0; y < yBlocksCount; y++)
+            {
+                var isCompleted = true; 
+                for(int x = 0; x < xBlocksCount; x++)
+                {
+                    if(wallMatrix[x,y] == false)
+                    {
+                        isCompleted = false;
+                        break; 
+                    }
+                }
+                if (isCompleted)
+                {
+                    completedLines.Add(y);
+                }
+            }
+
+            return new IsLineCompletedDto()
+            {
+                IsLineCompleted = (completedLines.Count > 0),
+                CompletedLinesYCoordinates = completedLines
+
+            }; 
+        }
+
+        //TODO 1: The last set block remains in the wall after line is removed. Shoud be fixed
+        public void RemoveCompletedLines()
+        {
+            var completedLines = Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount)
+                .CompletedLinesYCoordinates;
+
+            //Checking completed lines from top to the bottm 
+            for (int y = _yBlocksCount - 1; y >= 0; y--)
+            {
+                if (completedLines.Contains(y))
+                {
+                    //Clean current line 
+                    for (int x = 0; x < _xBlocksCount; x++)
+                    {
+                        _matrix[x, y] = false; 
+                    }
+
+                    //Move all the line from top till removed line 1 down
+                    for (int _y = y; _y > 0; _y--)
+                    {
+                        for (int x = 0; x < _xBlocksCount; x++)
+                        {
+                            _matrix[x, _y] = _matrix[x, _y - 1];
+                            _matrix[x, _y - 1] = false; 
+                        }
+                    }
+                }
+            }
+
+            SetInitialActiveBlockCoordinates(); 
         }
 
         public void LowerActiveShape()
