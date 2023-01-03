@@ -48,16 +48,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             DrawWall(_spriteBatch); 
         }
 
-        public void AddShape(Shape shape)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RotateActiveShape(Direction direction)
-        {
-            throw new NotImplementedException();
-        }
-
         public void MoveActiveShape(Direction? direction = null)
         {
             if(direction == Direction.Down)
@@ -119,7 +109,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             }; 
         }
 
-        //TODO 1: The last set block remains in the wall after line is removed. Shoud be fixed
         public void RemoveCompletedLines()
         {
             var completedLines = Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount)
@@ -151,11 +140,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             SetInitialActiveBlockCoordinates(); 
         }
 
-        public void LowerActiveShape()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Dispose()
         {
             _wallRectangle.Dispose();
@@ -177,10 +161,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             return _activeBlockY < _yBlocksCount - 1 && !_matrix[_activeBlockX, _activeBlockY + 1]; 
         }
 
-        private void RemoveLines(int[] linesNumbers)
-        {
-
-        }
         private void DrawWall(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < _matrix.GetLength(0); x++)
@@ -220,15 +200,6 @@ namespace GameDevStudy.Monotris.ScreenElements
                     _wallBlockSize,
                     _wallBlockSize),
                 _wallColor);
-        }
-        private void AddBlock(int x, int y)
-        {
-            _matrix[x, y] = true;
-        }
-
-        private void RemoveBlock(int x, int y)
-        {
-            _matrix[x, y] = false;
         }
 
     }
