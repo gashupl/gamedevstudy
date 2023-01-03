@@ -1,4 +1,5 @@
 ﻿using GameDevStudy.Monotris.Models;
+using GameDevStudy.Monotris.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -19,12 +20,15 @@ namespace GameDevStudy.Monotris.ScreenElements
         private Point _leftTopCornerLocation = new Point(20, 50);
 
         private int _activeBlockX;
-        private int _activeBlockY;  
+        private int _activeBlockY;
+
+        private WallCalculationService _wallCalculator; 
 
         internal Wall(GraphicsDevice graphicsDevice)
         {
             SetInitialActiveBlockCoordinates(); 
             
+            _wallCalculator = new WallCalculationService(_xBlocksCount, _yBlocksCount);
             _matrix = new bool[_xBlocksCount, _yBlocksCount];
             
             _wallRectangle = new Texture2D(graphicsDevice, 1, 1);
@@ -39,22 +43,29 @@ namespace GameDevStudy.Monotris.ScreenElements
             //{
             //    _matrix[i, 19] = true;
             //}
-            
+
         }
 
+        public bool IsLineCompleted
+        {
+            get => _wallCalculator.IsLineCompleted(_matrix).IsLineCompleted;        
+        }
+
+        //Checked
         public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
             _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape      
             DrawWall(_spriteBatch); 
         }
 
+        //Checked
         public void MoveActiveShape(Direction? direction = null)
         {
             if(direction == Direction.Down)
             {
-                if (IsNextDownMoveAllowed())
+                if (_wallCalculator.IsNextDownMoveAllowed(_matrix, _activeBlockX, _activeBlockY))
                 {
-                    ClearCurrentActiveBlock();
+                    _wallCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY);
                     _activeBlockY += 1;
                 }
                 else
@@ -65,77 +76,22 @@ namespace GameDevStudy.Monotris.ScreenElements
             }
             else if(direction == Direction.Left && _activeBlockX > 0)
             {
-                ClearCurrentActiveBlock(); 
+                _wallCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY); 
                 _activeBlockX -= 1;
             }
             else if(direction == Direction.Right && _activeBlockX < _xBlocksCount - 1)
             {
-                ClearCurrentActiveBlock();
+                _wallCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY);
                 _activeBlockX += 1; 
             }
         }
 
-        //TODO: Change into property
-        public bool IsLineCompleted()
-        {
-            return Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount).IsLineCompleted; 
-        }
-
-        public static IsLineCompletedDto IsLineCompleted(bool[,] wallMatrix, int xBlocksCount, int yBlocksCount)
-        {
-            var completedLines = new List<int>(); 
-            for(int y = 0; y < yBlocksCount; y++)
-            {
-                var isCompleted = true; 
-                for(int x = 0; x < xBlocksCount; x++)
-                {
-                    if(wallMatrix[x,y] == false)
-                    {
-                        isCompleted = false;
-                        break; 
-                    }
-                }
-                if (isCompleted)
-                {
-                    completedLines.Add(y);
-                }
-            }
-
-            return new IsLineCompletedDto()
-            {
-                IsLineCompleted = (completedLines.Count > 0),
-                CompletedLinesYCoordinates = completedLines
-
-            }; 
-        }
-
         public void RemoveCompletedLines()
         {
-            var completedLines = Wall.IsLineCompleted(_matrix, _xBlocksCount, _yBlocksCount)
+            var completedLines = _wallCalculator.IsLineCompleted(_matrix)
                 .CompletedLinesYCoordinates;
 
-            //Checking completed lines from top to the bottm 
-            for (int y = _yBlocksCount - 1; y >= 0; y--)
-            {
-                if (completedLines.Contains(y))
-                {
-                    //Clean current line 
-                    for (int x = 0; x < _xBlocksCount; x++)
-                    {
-                        _matrix[x, y] = false; 
-                    }
-
-                    //Move all the line from top till removed line 1 down
-                    for (int _y = y; _y > 0; _y--)
-                    {
-                        for (int x = 0; x < _xBlocksCount; x++)
-                        {
-                            _matrix[x, _y] = _matrix[x, _y - 1];
-                            _matrix[x, _y - 1] = false; 
-                        }
-                    }
-                }
-            }
+            _wallCalculator.RemoveCompletedLines(ref _matrix, completedLines); 
 
             SetInitialActiveBlockCoordinates(); 
         }
@@ -151,16 +107,7 @@ namespace GameDevStudy.Monotris.ScreenElements
             _activeBlockY = 0;
         }
 
-        private void ClearCurrentActiveBlock()
-        {
-            _matrix[_activeBlockX, _activeBlockY] = false;
-        }
-
-        private bool IsNextDownMoveAllowed()
-        {
-            return _activeBlockY < _yBlocksCount - 1 && !_matrix[_activeBlockX, _activeBlockY + 1]; 
-        }
-
+        //Checked
         private void DrawWall(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < _matrix.GetLength(0); x++)
@@ -180,6 +127,7 @@ namespace GameDevStudy.Monotris.ScreenElements
 
         }
 
+        //Checked
         private void DrawBlock(SpriteBatch spriteBatch, int x, int y)
         {
             spriteBatch.Draw(_blockRectangle,
@@ -191,6 +139,7 @@ namespace GameDevStudy.Monotris.ScreenElements
                 _blockColor);
         }
 
+        //Checked
         private void DrawEmptyBlockSpace(SpriteBatch spriteBatch, int x, int y)
         {
             spriteBatch.Draw(_wallRectangle,

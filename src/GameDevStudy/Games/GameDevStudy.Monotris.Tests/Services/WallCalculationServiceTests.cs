@@ -1,13 +1,14 @@
-﻿using System;
+﻿using GameDevStudy.Monotris.Services;
+using System;
 using Xunit;
 
 namespace GameDevStudy.Monotris.ScreenElements
 {
-    public class WallTests
+    public class WallCalculationServiceTests
     {
 
         [Fact]
-        public void IsLineCompleted_Yes_()
+        public void IsLineCompleted_Yes()
         {
             var xBlocksCount = 5;
             var yBlocksCount = 10; 
@@ -17,8 +18,9 @@ namespace GameDevStudy.Monotris.ScreenElements
             {
                 blocksMatrix[i, 0] = true;
             }
-            
-            var result = Wall.IsLineCompleted(blocksMatrix, xBlocksCount, yBlocksCount);
+
+            var service = new WallCalculationService(xBlocksCount, yBlocksCount); 
+            var result = service.IsLineCompleted(blocksMatrix);
 
             Assert.True(result.IsLineCompleted); 
         }
@@ -36,7 +38,8 @@ namespace GameDevStudy.Monotris.ScreenElements
                 blocksMatrix[i, 0] = true;
             }
 
-            var result = Wall.IsLineCompleted(blocksMatrix, xBlocksCount, yBlocksCount);
+            var service = new WallCalculationService(xBlocksCount, yBlocksCount);
+            var result = service.IsLineCompleted(blocksMatrix);
 
             Assert.False(result.IsLineCompleted);
         }
