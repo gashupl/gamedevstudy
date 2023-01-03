@@ -66,7 +66,7 @@ namespace GameDevStudy.Monotris
         {
             base.Update(gameTime);
 
-            if (!_wall.IsLineCompleted())
+            if (!_wall.IsLineCompleted)
             {
                 if ((DateTime.Now - _lastUpdate).TotalSeconds > 1)
                 {
