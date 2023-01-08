@@ -1,8 +1,6 @@
-﻿using GameDevStudy.Monotris.Domain.Services;
-using System;
-using Xunit;
+﻿using Xunit;
 
-namespace GameDevStudy.Monotris.ScreenElements
+namespace GameDevStudy.Monotris.Domain.Services
 {
     public class WallCalculationServiceTests
     {
