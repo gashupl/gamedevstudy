@@ -1,6 +1,6 @@
 ﻿using GameDevStudy.Monotris.Models;
 
-namespace GameDevStudy.Monotris.Services
+namespace GameDevStudy.Monotris.Domain.Services
 {
     internal class WallCalculationService
     {

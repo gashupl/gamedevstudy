@@ -1,5 +1,5 @@
 ﻿using GameDevStudy.Monotris.Models;
-using GameDevStudy.Monotris.Services;
+using GameDevStudy.Monotris.Domain.Services;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 

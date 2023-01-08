@@ -1,4 +1,4 @@
-﻿using GameDevStudy.Monotris.Services;
+﻿using GameDevStudy.Monotris.Domain.Services;
 using System;
 using Xunit;
 
