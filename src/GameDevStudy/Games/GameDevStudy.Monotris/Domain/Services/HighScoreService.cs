@@ -22,13 +22,14 @@ namespace GameDevStudy.Monotris.Domain.Services
             _encryptionService = encryptionService;
         }
 
-        public IEnumerable<Score>? Get()
+        public void Load()
         {
-            var jsonText = _file.ReadAllText(_fileName);
+            var jsonEncryptedText = _file.ReadAllText(_fileName);
+            var jsonText = _encryptionService.Decrypt(jsonEncryptedText); 
             try
             {
                 var deserialized = JsonSerializer.Deserialize(jsonText, typeof(IEnumerable<Score>));
-                return deserialized as IEnumerable<Score>;
+                _highScore = deserialized as IEnumerable<Score>;
             }
             catch(Exception ex)
             {
@@ -36,27 +37,32 @@ namespace GameDevStudy.Monotris.Domain.Services
             }
         }
 
+        public void Save()
+        {
+            try
+            {
+                var jsonText = JsonSerializer.Serialize(_highScore);
+                var encryptedText = _encryptionService.Encrypt(jsonText);
+                _file.WriteAllText(_fileName, encryptedText);
+            }
+            catch (Exception ex)
+            {
+                throw new ScoreFileException("Exception when saving high score to file", ex);
+            }
+        }
+
         public void AddScore(Score score)
         {
             if(_highScore == null)
             {
-                _highScore = Get(); 
+                Load(); 
             }
 
-            var scoresList = _highScore.ToList(); 
+            var scoresList = _highScore != null ? _highScore.ToList() : new List<Score>(); 
             scoresList.Add(score);
-            _highScore = scoresList.OrderBy(s => s.Result); 
-            
-            try 
-            {
-                var jsonText = JsonSerializer.Serialize(score);
-                var encryptedText = _encryptionService.Encrypt(jsonText);
-                _file.WriteAllText(_fileName, encryptedText);
-            }
-            catch(Exception ex)
-            {
-                throw new ScoreFileException("Exception when saving high score to file", ex);
-            }
+            _highScore = scoresList.OrderBy(s => s.Result);
+
+            Save(); 
         }
 
     }
