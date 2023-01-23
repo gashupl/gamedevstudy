@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.ScreenElements
 {
-    //TODO: This class is too big to be called "model". Should be splitted into smaller ones
     internal class Wall : ScreenElement, IDisposable
     {
         private const int _wallBlockSize = 35;
