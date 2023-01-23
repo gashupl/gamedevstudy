@@ -12,20 +12,17 @@ namespace GameDevStudy.Monotris.Domain.Services
     internal class HighScoreService
     {
         private readonly IFileWrapper _file;
-        private readonly IEncryptionService _encryptionService; 
         private IEnumerable<Score>? _highScore;
-        private const string _fileName = "scores.json"; 
+        private const string _fileName = ".scores"; 
 
-        public HighScoreService(IFileWrapper file, IEncryptionService encryptionService)
+        public HighScoreService(IFileWrapper file)
         {
             _file = file; 
-            _encryptionService = encryptionService;
         }
 
         public void Load()
         {
-            var jsonEncryptedText = _file.ReadAllText(_fileName);
-            var jsonText = _encryptionService.Decrypt(jsonEncryptedText); 
+            var jsonText = _file.ReadAllText(_fileName);
             try
             {
                 var deserialized = JsonSerializer.Deserialize(jsonText, typeof(IEnumerable<Score>));
@@ -42,8 +39,7 @@ namespace GameDevStudy.Monotris.Domain.Services
             try
             {
                 var jsonText = JsonSerializer.Serialize(_highScore);
-                var encryptedText = _encryptionService.Encrypt(jsonText);
-                _file.WriteAllText(_fileName, encryptedText);
+                _file.WriteAllText(_fileName, jsonText);
             }
             catch (Exception ex)
             {
