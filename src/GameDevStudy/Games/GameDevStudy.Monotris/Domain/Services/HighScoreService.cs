@@ -20,6 +20,12 @@ namespace GameDevStudy.Monotris.Domain.Services
             _file = file; 
         }
 
+        public HighScoreService(IFileWrapper file, IEnumerable<Score>? highScore)
+        {
+            _file = file;
+            _highScore = highScore;
+        }
+
         public void Load()
         {
             var jsonText = _file.ReadAllText(_fileName);
@@ -58,7 +64,6 @@ namespace GameDevStudy.Monotris.Domain.Services
             scoresList.Add(score);
             _highScore = scoresList.OrderBy(s => s.Result);
 
-            Save(); 
         }
 
     }
