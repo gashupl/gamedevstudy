@@ -1,11 +1,6 @@
 ﻿using GameDevStudy.Monotris.Domain.Exceptions;
 using GameDevStudy.Monotris.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace GameDevStudy.Monotris.Domain.Services
 {
@@ -13,7 +8,20 @@ namespace GameDevStudy.Monotris.Domain.Services
     {
         private readonly IFileWrapper _file;
         private IEnumerable<Score>? _highScore;
-        private const string _fileName = ".scores"; 
+        private const string _fileName = ".scores";
+
+        public IEnumerable<Score>? HighScore
+        {
+            get 
+            {
+                if(_highScore == null)
+                {
+                    Load(); 
+                }
+                return _highScore;
+            }
+            private set { _highScore = value; }
+        }
 
         public HighScoreService(IFileWrapper file)
         {
@@ -27,10 +35,10 @@ namespace GameDevStudy.Monotris.Domain.Services
         }
 
         public void Load()
-        {
-            var jsonText = _file.ReadAllText(_fileName);
+        {    
             try
             {
+                var jsonText = _file.ReadAllText(_fileName);
                 var deserialized = JsonSerializer.Deserialize(jsonText, typeof(IEnumerable<Score>));
                 _highScore = deserialized as IEnumerable<Score>;
             }
@@ -62,7 +70,7 @@ namespace GameDevStudy.Monotris.Domain.Services
 
             var scoresList = _highScore != null ? _highScore.ToList() : new List<Score>(); 
             scoresList.Add(score);
-            _highScore = scoresList.OrderBy(s => s.Result);
+            _highScore = scoresList.OrderByDescending(s => s.Result);
 
         }
 
