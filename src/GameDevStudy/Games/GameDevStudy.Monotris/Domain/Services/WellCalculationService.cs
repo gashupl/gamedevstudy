@@ -2,17 +2,17 @@
 
 namespace GameDevStudy.Monotris.Domain.Services
 {
-    internal class WallCalculationService
+    internal class WellCalculationService
     {
         private int _xBlocksCount;
         private int _yBlocksCount;
 
-        internal WallCalculationService(int xBlocksCount, int yBlocksCount)
+        internal WellCalculationService(int xBlocksCount, int yBlocksCount)
         {
             _xBlocksCount = xBlocksCount;
             _yBlocksCount = yBlocksCount;
         }
-        public IsLineCompletedDto IsLineCompleted(bool[,] wallMatrix)
+        public IsLineCompletedDto IsLineCompleted(bool[,] wellMatrix)
         {
             var completedLines = new List<int>();
             for (int y = 0; y < _yBlocksCount; y++)
@@ -20,7 +20,7 @@ namespace GameDevStudy.Monotris.Domain.Services
                 var isCompleted = true;
                 for (int x = 0; x < _xBlocksCount; x++)
                 {
-                    if (wallMatrix[x, y] == false)
+                    if (wellMatrix[x, y] == false)
                     {
                         isCompleted = false;
                         break;

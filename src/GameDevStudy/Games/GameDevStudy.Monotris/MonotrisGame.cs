@@ -14,7 +14,7 @@ namespace GameDevStudy.Monotris
         private int gameResolutionHeigth = 800; //1080;
 
         private SpriteBatch? _spriteBatch;
-        private Wall _wall;
+        private Well _well;
         private DateTime _lastUpdate = DateTime.Now; 
         private DateTime _lastMove = DateTime.Now;
 
@@ -52,25 +52,25 @@ namespace GameDevStudy.Monotris
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _wall = new Wall(GraphicsDevice);
+            _well = new Well(GraphicsDevice);
         }
 
         protected override void UnloadContent()
         {
             base.UnloadContent();
             _spriteBatch?.Dispose();
-            _wall.Dispose(); 
+            _well.Dispose(); 
         }
 
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (!_wall.IsLineCompleted)
+            if (!_well.IsLineCompleted)
             {
                 if ((DateTime.Now - _lastUpdate).TotalSeconds > 1)
                 {
-                    _wall.MoveActiveShape(Direction.Down);
+                    _well.MoveActiveShape(Direction.Down);
                     _lastUpdate = DateTime.Now;
                 }
 
@@ -79,15 +79,15 @@ namespace GameDevStudy.Monotris
                     var keyBoardState = Keyboard.GetState();
                     if (keyBoardState.IsKeyDown(Keys.Left))
                     {
-                        _wall.MoveActiveShape(Direction.Left);
+                        _well.MoveActiveShape(Direction.Left);
                     }
                     else if (keyBoardState.IsKeyDown(Keys.Right))
                     {
-                        _wall.MoveActiveShape(Direction.Right);
+                        _well.MoveActiveShape(Direction.Right);
                     }
                     else if (keyBoardState.IsKeyDown(Keys.Down))
                     {
-                        _wall.MoveActiveShape(Direction.Down);
+                        _well.MoveActiveShape(Direction.Down);
                     }
                     _lastMove = DateTime.Now;
                 }
@@ -96,7 +96,7 @@ namespace GameDevStudy.Monotris
             {
                 if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
                 {
-                    _wall.RemoveCompletedLines();
+                    _well.RemoveCompletedLines();
                     _lastMove = DateTime.Now;
                 }
             }
@@ -111,7 +111,7 @@ namespace GameDevStudy.Monotris
             if(_spriteBatch != null)
             {
                 _spriteBatch.Begin();
-                _wall.Draw(_spriteBatch, gameTime); 
+                _well.Draw(_spriteBatch, gameTime); 
                 _spriteBatch.End();
             }
 

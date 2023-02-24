@@ -2,7 +2,7 @@
 
 namespace GameDevStudy.Monotris.Domain.Services
 {
-    public class WallCalculationServiceTests
+    public class WellCalculationServiceTests
     {
 
         [Fact]
@@ -17,7 +17,7 @@ namespace GameDevStudy.Monotris.Domain.Services
                 blocksMatrix[i, 0] = true;
             }
 
-            var service = new WallCalculationService(xBlocksCount, yBlocksCount); 
+            var service = new WellCalculationService(xBlocksCount, yBlocksCount); 
             var result = service.IsLineCompleted(blocksMatrix);
 
             Assert.True(result.IsLineCompleted); 
@@ -36,7 +36,7 @@ namespace GameDevStudy.Monotris.Domain.Services
                 blocksMatrix[i, 0] = true;
             }
 
-            var service = new WallCalculationService(xBlocksCount, yBlocksCount);
+            var service = new WellCalculationService(xBlocksCount, yBlocksCount);
             var result = service.IsLineCompleted(blocksMatrix);
 
             Assert.False(result.IsLineCompleted);
