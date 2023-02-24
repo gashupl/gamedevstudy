@@ -18,6 +18,7 @@ namespace GameDevStudy.Monotris
         private DateTime _lastUpdate = DateTime.Now; 
         private DateTime _lastMove = DateTime.Now;
 
+        private ScoreText _scoreText; 
         public MonotrisGame()
         {
             if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < gameResolutionWidth ||
@@ -47,12 +48,15 @@ namespace GameDevStudy.Monotris
             graphics.ApplyChanges();
 
             base.Initialize();
+
+            _scoreText = new ScoreText(Content);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _well = new Well(GraphicsDevice);
+            
         }
 
         protected override void UnloadContent()
@@ -111,9 +115,13 @@ namespace GameDevStudy.Monotris
             if(_spriteBatch != null)
             {
                 _spriteBatch.Begin();
-                _well.Draw(_spriteBatch, gameTime); 
+                _well.Draw(_spriteBatch, gameTime);
+
+                _scoreText.Draw(_spriteBatch, gameTime);
+
                 _spriteBatch.End();
             }
+            
 
         }
     }

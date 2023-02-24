@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.ScreenElements
 {
-    internal class Well : ScreenElement, IDisposable
+    internal class Well : IDisposable
     {
         private const int _wellBlockSize = 35;
         private const int _xBlocksCount = 10;
@@ -51,7 +51,7 @@ namespace GameDevStudy.Monotris.ScreenElements
         }
 
         //Checked
-        public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
             _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape      
             DrawWell(_spriteBatch); 
