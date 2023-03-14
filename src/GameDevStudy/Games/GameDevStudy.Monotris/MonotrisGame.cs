@@ -15,6 +15,8 @@ namespace GameDevStudy.Monotris
 
         private SpriteBatch? _spriteBatch;
         private Well _well;
+        private Score _score; 
+
         private DateTime _lastUpdate = DateTime.Now; 
         private DateTime _lastMove = DateTime.Now;
 
@@ -56,6 +58,7 @@ namespace GameDevStudy.Monotris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             _well = new Well(GraphicsDevice);
+            _well.OnLineRemoved += (point) => _score.Add(point); 
             
         }
 

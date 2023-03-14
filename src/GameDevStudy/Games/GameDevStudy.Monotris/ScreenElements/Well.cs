@@ -21,7 +21,9 @@ namespace GameDevStudy.Monotris.ScreenElements
         private int _activeBlockX;
         private int _activeBlockY;
 
-        private WellCalculationService _wellCalculator; 
+        private WellCalculationService _wellCalculator;
+
+        internal Action<int>? OnLineRemoved { get; set; }
 
         internal Well(GraphicsDevice graphicsDevice)
         {
@@ -90,7 +92,9 @@ namespace GameDevStudy.Monotris.ScreenElements
             var completedLines = _wellCalculator.IsLineCompleted(_matrix)
                 .CompletedLinesYCoordinates;
 
-            _wellCalculator.RemoveCompletedLines(ref _matrix, completedLines); 
+            _wellCalculator.RemoveCompletedLines(ref _matrix, completedLines);
+
+            OnLineRemoved?.Invoke(); 
 
             SetInitialActiveBlockCoordinates(); 
         }

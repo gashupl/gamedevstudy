@@ -2,6 +2,6 @@
 {
     internal static class FontNames
     {
-        public static string HighScoreFont = "HighScoreFont";
+        public static string HighScoreFont = @"Fonts\HighScoreFont";
     }
 }

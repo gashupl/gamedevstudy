@@ -21,7 +21,7 @@ namespace GameDevStudy.Monotris.ScreenElements
         {
             if (_scoreFont != null)
             {
-                _spriteBatch.DrawString(_scoreFont, $"0000", _scorePosition, Color.YellowGreen);
+                _spriteBatch.DrawString(_scoreFont, "0000", _scorePosition, Color.YellowGreen);
             }
         }
 
