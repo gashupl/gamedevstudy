@@ -5,16 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.ScreenElements
 {
-    //TODO: This class is too big to be called "model". Should be splitted into smaller ones
-    internal class Wall : ScreenElement, IDisposable
+    internal class Well : IDisposable
     {
-        private const int _wallBlockSize = 35;
+        private const int _wellBlockSize = 35;
         private const int _xBlocksCount = 10;
         private const int _yBlocksCount = 20;
-        private readonly Color _wallColor = Color.Black;
+        private readonly Color _wellColor = Color.Black;
         private readonly Color _blockColor = Color.Green; 
 
-        private Texture2D _wallRectangle;
+        private Texture2D _wellRectangle;
         private Texture2D _blockRectangle;
         private bool[,] _matrix;
         private Point _leftTopCornerLocation = new Point(20, 50);
@@ -22,17 +21,19 @@ namespace GameDevStudy.Monotris.ScreenElements
         private int _activeBlockX;
         private int _activeBlockY;
 
-        private WallCalculationService _wallCalculator; 
+        private WellCalculationService _wellCalculator;
 
-        internal Wall(GraphicsDevice graphicsDevice)
+        internal Action<int>? OnLineRemoved { get; set; }
+
+        internal Well(GraphicsDevice graphicsDevice)
         {
             SetInitialActiveBlockCoordinates(); 
             
-            _wallCalculator = new WallCalculationService(_xBlocksCount, _yBlocksCount);
+            _wellCalculator = new WellCalculationService(_xBlocksCount, _yBlocksCount);
             _matrix = new bool[_xBlocksCount, _yBlocksCount];
             
-            _wallRectangle = new Texture2D(graphicsDevice, 1, 1);
-            _wallRectangle.SetData(new[] { _wallColor });
+            _wellRectangle = new Texture2D(graphicsDevice, 1, 1);
+            _wellRectangle.SetData(new[] { _wellColor });
 
             _blockRectangle = new Texture2D(graphicsDevice, 1, 1);
             _blockRectangle.SetData(new[] { _blockColor });
@@ -48,14 +49,14 @@ namespace GameDevStudy.Monotris.ScreenElements
 
         public bool IsLineCompleted
         {
-            get => _wallCalculator.IsLineCompleted(_matrix).IsLineCompleted;        
+            get => _wellCalculator.IsLineCompleted(_matrix).IsLineCompleted;        
         }
 
         //Checked
-        public override void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
         {
             _matrix[_activeBlockX, _activeBlockY] = true; //TODO: Let's assume for now it is active shape      
-            DrawWall(_spriteBatch); 
+            DrawWell(_spriteBatch); 
         }
 
         //Checked
@@ -63,9 +64,9 @@ namespace GameDevStudy.Monotris.ScreenElements
         {
             if(direction == Direction.Down)
             {
-                if (_wallCalculator.IsNextDownMoveAllowed(_matrix, _activeBlockX, _activeBlockY))
+                if (_wellCalculator.IsNextDownMoveAllowed(_matrix, _activeBlockX, _activeBlockY))
                 {
-                    _wallCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY);
+                    _wellCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY);
                     _activeBlockY += 1;
                 }
                 else
@@ -76,29 +77,31 @@ namespace GameDevStudy.Monotris.ScreenElements
             }
             else if(direction == Direction.Left && _activeBlockX > 0)
             {
-                _wallCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY); 
+                _wellCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY); 
                 _activeBlockX -= 1;
             }
             else if(direction == Direction.Right && _activeBlockX < _xBlocksCount - 1)
             {
-                _wallCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY);
+                _wellCalculator.ClearCurrentActiveBlock(ref _matrix, _activeBlockX, _activeBlockY);
                 _activeBlockX += 1; 
             }
         }
 
         public void RemoveCompletedLines()
         {
-            var completedLines = _wallCalculator.IsLineCompleted(_matrix)
+            var completedLines = _wellCalculator.IsLineCompleted(_matrix)
                 .CompletedLinesYCoordinates;
 
-            _wallCalculator.RemoveCompletedLines(ref _matrix, completedLines); 
+            _wellCalculator.RemoveCompletedLines(ref _matrix, completedLines);
+
+            OnLineRemoved?.Invoke(1); 
 
             SetInitialActiveBlockCoordinates(); 
         }
 
         public void Dispose()
         {
-            _wallRectangle.Dispose();
+            _wellRectangle.Dispose();
         }
 
         private void SetInitialActiveBlockCoordinates()
@@ -108,7 +111,7 @@ namespace GameDevStudy.Monotris.ScreenElements
         }
 
         //Checked
-        private void DrawWall(SpriteBatch spriteBatch)
+        private void DrawWell(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < _matrix.GetLength(0); x++)
             {
@@ -132,23 +135,23 @@ namespace GameDevStudy.Monotris.ScreenElements
         {
             spriteBatch.Draw(_blockRectangle,
                 new Rectangle(
-                    _leftTopCornerLocation.X + x * _wallBlockSize,
-                    _leftTopCornerLocation.Y + y * _wallBlockSize,
-                    _wallBlockSize,
-                    _wallBlockSize),
+                    _leftTopCornerLocation.X + x * _wellBlockSize,
+                    _leftTopCornerLocation.Y + y * _wellBlockSize,
+                    _wellBlockSize,
+                    _wellBlockSize),
                 _blockColor);
         }
 
         //Checked
         private void DrawEmptyBlockSpace(SpriteBatch spriteBatch, int x, int y)
         {
-            spriteBatch.Draw(_wallRectangle,
+            spriteBatch.Draw(_wellRectangle,
                 new Rectangle(
-                    _leftTopCornerLocation.X + x * _wallBlockSize,
-                    _leftTopCornerLocation.Y + y * _wallBlockSize,
-                    _wallBlockSize,
-                    _wallBlockSize),
-                _wallColor);
+                    _leftTopCornerLocation.X + x * _wellBlockSize,
+                    _leftTopCornerLocation.Y + y * _wellBlockSize,
+                    _wellBlockSize,
+                    _wellBlockSize),
+                _wellColor);
         }
 
     }
