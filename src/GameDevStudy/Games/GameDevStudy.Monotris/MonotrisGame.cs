@@ -15,7 +15,7 @@ namespace GameDevStudy.Monotris
 
         private SpriteBatch? _spriteBatch;
         private Well _well;
-        private Score _score; 
+        private Score _score = new Score(); 
 
         private DateTime _lastUpdate = DateTime.Now; 
         private DateTime _lastMove = DateTime.Now;
@@ -51,7 +51,7 @@ namespace GameDevStudy.Monotris
 
             base.Initialize();
 
-            _scoreText = new ScoreText(Content);
+            _scoreText = new ScoreText(Content, new Vector2(gameResolutionWidth - 100, 0));
         }
 
         protected override void LoadContent()
@@ -120,7 +120,7 @@ namespace GameDevStudy.Monotris
                 _spriteBatch.Begin();
                 _well.Draw(_spriteBatch, gameTime);
 
-                _scoreText.Draw(_spriteBatch, gameTime);
+                _scoreText.Draw(_score.Result, _spriteBatch, gameTime);
 
                 _spriteBatch.End();
             }

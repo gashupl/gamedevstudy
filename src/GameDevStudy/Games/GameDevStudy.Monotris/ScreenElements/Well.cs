@@ -94,7 +94,7 @@ namespace GameDevStudy.Monotris.ScreenElements
 
             _wellCalculator.RemoveCompletedLines(ref _matrix, completedLines);
 
-            OnLineRemoved?.Invoke(); 
+            OnLineRemoved?.Invoke(1); 
 
             SetInitialActiveBlockCoordinates(); 
         }

@@ -8,20 +8,21 @@ namespace GameDevStudy.Monotris.ScreenElements
 {
     internal class ScoreText
     {
-        private Vector2 _scorePosition = new Vector2(0, 0);
+        private Vector2 _scorePosition;
         private SpriteFont _scoreFont;
+        private const int _digitsNumber = 6; 
 
-        internal ScoreText(ContentManager content)
+        internal ScoreText(ContentManager content, Vector2 position)
         {
-            //TODO: Setup font asset
             _scoreFont = content.Load<SpriteFont>(FontNames.HighScoreFont);
+            _scorePosition = position;
         }
 
-        public void Draw(SpriteBatch _spriteBatch, GameTime gameTime)
+        public void Draw(int result, SpriteBatch _spriteBatch, GameTime gameTime)
         {
             if (_scoreFont != null)
             {
-                _spriteBatch.DrawString(_scoreFont, "0000", _scorePosition, Color.YellowGreen);
+                _spriteBatch.DrawString(_scoreFont, result.ToString().PadLeft(_digitsNumber, '0'), _scorePosition, Color.Black);
             }
         }
 
