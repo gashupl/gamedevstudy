@@ -1,5 +1,6 @@
 ﻿using GameDevStudy.Monotris.Models;
 using GameDevStudy.Monotris.ScreenElements;
+using GameDevStudy.Monotris.Screens.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,22 +10,17 @@ namespace GameDevStudy.Monotris
 {
     public class MonotrisGame : Game
     {
+        internal static ScreenManager ScreenManager; 
+        internal static int GameResolutionWidth = 1280; //1920;
+        internal static int GameResolutionHeigth = 800; //1080;
+
         private GraphicsDeviceManager graphics;
-        private int gameResolutionWidth = 1280; //1920;
-        private int gameResolutionHeigth = 800; //1080;
-
         private SpriteBatch? _spriteBatch;
-        private Well _well;
-        private Score _score = new Score(); 
 
-        private DateTime _lastUpdate = DateTime.Now; 
-        private DateTime _lastMove = DateTime.Now;
-
-        private ScoreText _scoreText; 
         public MonotrisGame()
         {
-            if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < gameResolutionWidth ||
-                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height < gameResolutionHeigth)
+            if (GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width < GameResolutionWidth ||
+                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height < GameResolutionHeigth)
             {
                 throw new Exception("Required resolution not supported");
             }
@@ -36,13 +32,13 @@ namespace GameDevStudy.Monotris
 
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-            Window.AllowAltF4 = true;
+            Window.AllowAltF4 = true;           
         }
 
         protected override void Initialize()
         {
-            graphics.PreferredBackBufferWidth = gameResolutionWidth;
-            graphics.PreferredBackBufferHeight = gameResolutionHeigth;
+            graphics.PreferredBackBufferWidth = GameResolutionWidth;
+            graphics.PreferredBackBufferHeight = GameResolutionHeigth;
 
 #if !DEBUG
             graphics.ToggleFullScreen();
@@ -50,64 +46,28 @@ namespace GameDevStudy.Monotris
             graphics.ApplyChanges();
 
             base.Initialize();
-
-            _scoreText = new ScoreText(Content, new Vector2(gameResolutionWidth - 100, 0));
+       
+            ScreenManager.CurrentScreen.Initialize(GraphicsDevice, Content);           
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            _well = new Well(GraphicsDevice);
-            _well.OnLineRemoved += (point) => _score.Add(point); 
-            
+            ScreenManager = new ScreenManager(Screen.GameplayScreen, GraphicsDevice, Content);
+            ScreenManager.CurrentScreen.LoadContent(GraphicsDevice); 
         }
 
         protected override void UnloadContent()
         {
             base.UnloadContent();
             _spriteBatch?.Dispose();
-            _well.Dispose(); 
+            ScreenManager.CurrentScreen.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            if (!_well.IsLineCompleted)
-            {
-                if ((DateTime.Now - _lastUpdate).TotalSeconds > 1)
-                {
-                    _well.MoveActiveShape(Direction.Down);
-                    _lastUpdate = DateTime.Now;
-                }
-
-                if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
-                {
-                    var keyBoardState = Keyboard.GetState();
-                    if (keyBoardState.IsKeyDown(Keys.Left))
-                    {
-                        _well.MoveActiveShape(Direction.Left);
-                    }
-                    else if (keyBoardState.IsKeyDown(Keys.Right))
-                    {
-                        _well.MoveActiveShape(Direction.Right);
-                    }
-                    else if (keyBoardState.IsKeyDown(Keys.Down))
-                    {
-                        _well.MoveActiveShape(Direction.Down);
-                    }
-                    _lastMove = DateTime.Now;
-                }
-            }
-            else
-            {
-                if ((DateTime.Now - _lastMove).TotalSeconds > 0.2)
-                {
-                    _well.RemoveCompletedLines();
-                    _lastMove = DateTime.Now;
-                }
-            }
-
+            ScreenManager.CurrentScreen.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -115,17 +75,8 @@ namespace GameDevStudy.Monotris
             GraphicsDevice.Clear(Color.DarkGray);
             base.Draw(gameTime);
 
-            if(_spriteBatch != null)
-            {
-                _spriteBatch.Begin();
-                _well.Draw(_spriteBatch, gameTime);
-
-                _scoreText.Draw(_score.Result, _spriteBatch, gameTime);
-
-                _spriteBatch.End();
-            }
-            
-
+            ScreenManager.CurrentScreen.Draw(_spriteBatch, gameTime); 
+ 
         }
     }
 }

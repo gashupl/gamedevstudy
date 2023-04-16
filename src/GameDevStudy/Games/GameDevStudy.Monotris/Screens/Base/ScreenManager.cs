@@ -14,16 +14,15 @@ namespace GameDevStudy.Monotris.Screens.Base
 
         public ScreenManager(Screen initialScreen, GraphicsDevice graphicsDevice, ContentManager content)
         {
+            _screenFactory = new ScreenFactory();
             _graphicsDevice = graphicsDevice;
             _content = content;
-            _screenFactory = new ScreenFactory();
-
             SwitchScreen(initialScreen);
         }
 
-        internal IScreen GetCurrent()
+        internal IScreen CurrentScreen
         {
-            return _currentScreen;
+            get { return _currentScreen; }         
         }
 
         internal void SwitchScreen(Screen screen)

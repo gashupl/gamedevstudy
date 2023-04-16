@@ -8,11 +8,15 @@ namespace GameDevStudy.Monotris.Screens.Base
     {
         void Initialize(GraphicsDevice graphicsDevice, ContentManager content);
 
-        void Draw(SpriteBatch spriteBatch);
+        void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
         void Update(GameTime gameTime);
 
-        void OnStart();
+        void LoadContent(GraphicsDevice graphicsDevice);
+
+        void UnloadContent();
+
+        void OnStart(); 
         void Cleanup();
     }
 }
