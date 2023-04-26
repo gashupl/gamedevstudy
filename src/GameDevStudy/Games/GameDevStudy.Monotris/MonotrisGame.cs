@@ -53,7 +53,7 @@ namespace GameDevStudy.Monotris
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            ScreenManager = new ScreenManager(Screen.GameplayScreen, GraphicsDevice, Content);
+            ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content);
             ScreenManager.CurrentScreen.LoadContent(GraphicsDevice); 
         }
 

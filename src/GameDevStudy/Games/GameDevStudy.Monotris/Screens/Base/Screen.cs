@@ -8,7 +8,7 @@ namespace GameDevStudy.Monotris.Screens.Base
 {
     public enum Screen
     {
-        TitleScreen,
+        MainScreen,
         GameplayScreen,
         HighScoreScreen,
     }
