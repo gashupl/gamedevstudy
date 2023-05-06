@@ -1,9 +1,6 @@
-﻿using GameDevStudy.Monotris.Models;
-using GameDevStudy.Monotris.ScreenElements;
-using GameDevStudy.Monotris.Screens.Base;
+﻿using GameDevStudy.Monotris.Screens.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 
 namespace GameDevStudy.Monotris

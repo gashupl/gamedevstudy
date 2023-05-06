@@ -3,6 +3,6 @@
     internal class SoundPaths
     {
         //Music: 
-        public static string TitleScreenMusic = @"Sounds\Music\TitleScreenMusic";
+        public static string TitleScreenMusic = @"Sounds\Music\menu";
     }
 }

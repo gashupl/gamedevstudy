@@ -21,9 +21,9 @@ namespace GameDevStudy.Monotris.Screens
             HighScore
         }
 
-        private Vector2 _titlePosition = new Vector2(0, 0);
-        private Vector2 _gameStartPosition = new Vector2(0, 0);
-        private Vector2 _creditsPosition = new Vector2(0, 0);
+        private Vector2 _titlePosition = new Vector2(100, 100);
+        private Vector2 _gameStartPosition = new Vector2(150, 200);
+        private Vector2 _highScorePosition = new Vector2(150, 250);
         private SelectedMenuPosition _selectedMenuPosition = SelectedMenuPosition.Start;
 
         private SpriteFont _titleFont;
@@ -43,7 +43,6 @@ namespace GameDevStudy.Monotris.Screens
 
         public void LoadContent(GraphicsDevice graphicsDevice)
         {
-            throw new NotImplementedException();
         }
 
         public void Update(GameTime gameTime)
@@ -76,13 +75,13 @@ namespace GameDevStudy.Monotris.Screens
 
             if (_titleFont != null)
             {
-                spriteBatch.DrawString(_titleFont, $"-- Monotris -- ", _titlePosition, Color.Black);
+                spriteBatch.DrawString(_titleFont, $"-- Monotris -- ", _titlePosition, Color.DarkGreen);
 
                 var startTextColor = _selectedMenuPosition == SelectedMenuPosition.Start ? Color.Yellow : Color.Black;
-                var creditsTextColor = _selectedMenuPosition == SelectedMenuPosition.Start ? Color.Black : Color.Yellow;
+                var creditsTextColor = _selectedMenuPosition == SelectedMenuPosition.Start ? Color.DarkGreen : Color.Yellow;
 
                 spriteBatch.DrawString(_menuFont, $"Start the game ", _gameStartPosition, startTextColor);
-                spriteBatch.DrawString(_menuFont, $"High Score ", _creditsPosition, creditsTextColor);
+                spriteBatch.DrawString(_menuFont, $"High Score ", _highScorePosition, creditsTextColor);
             }
             else
             {
@@ -104,7 +103,6 @@ namespace GameDevStudy.Monotris.Screens
 
         public void UnloadContent()
         {
-            throw new NotImplementedException();
         }
     }
 }
