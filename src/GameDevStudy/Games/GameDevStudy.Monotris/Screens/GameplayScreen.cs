@@ -24,12 +24,12 @@ namespace GameDevStudy.Monotris.Screens
 
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
+            _well = new Well(graphicsDevice);
             _scoreText = new ScoreText(content, new Vector2(MonotrisGame.GameResolutionWidth - 100, 0));
         }
 
         public void LoadContent(GraphicsDevice graphicsDevice)
-        {
-            _well = new Well(graphicsDevice);
+        {     
             _well.OnLineRemoved += (point) => _score.Add(point);
         }
 

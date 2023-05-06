@@ -1,9 +1,6 @@
-﻿using GameDevStudy.Monotris.Models;
-using GameDevStudy.Monotris.ScreenElements;
-using GameDevStudy.Monotris.Screens.Base;
+﻿using GameDevStudy.Monotris.Screens.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 
 namespace GameDevStudy.Monotris
@@ -53,7 +50,7 @@ namespace GameDevStudy.Monotris
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            ScreenManager = new ScreenManager(Screen.GameplayScreen, GraphicsDevice, Content);
+            ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content);
             ScreenManager.CurrentScreen.LoadContent(GraphicsDevice); 
         }
 
