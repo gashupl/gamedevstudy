@@ -51,14 +51,12 @@ namespace GameDevStudy.Monotris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content);
-            ScreenManager.CurrentScreen.LoadContent(GraphicsDevice); 
         }
 
         protected override void UnloadContent()
         {
             base.UnloadContent();
             _spriteBatch?.Dispose();
-            ScreenManager.CurrentScreen.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)

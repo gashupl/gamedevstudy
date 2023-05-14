@@ -5,11 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameDevStudy.Monotris.Screens
 {
@@ -25,12 +20,8 @@ namespace GameDevStudy.Monotris.Screens
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
             _well = new Well(graphicsDevice);
-            _scoreText = new ScoreText(content, new Vector2(MonotrisGame.GameResolutionWidth - 100, 0));
-        }
-
-        public void LoadContent(GraphicsDevice graphicsDevice)
-        {     
             _well.OnLineRemoved += (point) => _score.Add(point);
+            _scoreText = new ScoreText(content, new Vector2(MonotrisGame.GameResolutionWidth - 100, 0));
         }
 
         public void UnLoadContent()
@@ -87,10 +78,6 @@ namespace GameDevStudy.Monotris.Screens
                     _lastMove = DateTime.Now;
                 }
             }
-        }
-
-        public void UnloadContent()
-        {
         }
 
         public void OnStart()

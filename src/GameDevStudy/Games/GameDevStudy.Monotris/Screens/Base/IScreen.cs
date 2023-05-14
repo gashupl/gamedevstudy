@@ -12,10 +12,6 @@ namespace GameDevStudy.Monotris.Screens.Base
 
         void Update(GameTime gameTime);
 
-        void LoadContent(GraphicsDevice graphicsDevice);
-
-        void UnloadContent();
-
         void OnStart(); 
         void Cleanup();
     }

@@ -41,10 +41,6 @@ namespace GameDevStudy.Monotris.Screens
             _backgroundMusic = content.Load<Song>(SoundPaths.TitleScreenMusic);
         }
 
-        public void LoadContent(GraphicsDevice graphicsDevice)
-        {
-        }
-
         public void Update(GameTime gameTime)
         {
             var keyBoardState = Keyboard.GetState();
@@ -99,10 +95,6 @@ namespace GameDevStudy.Monotris.Screens
         public void Cleanup()
         {
             MediaPlayer.Stop();
-        }
-
-        public void UnloadContent()
-        {
         }
     }
 }

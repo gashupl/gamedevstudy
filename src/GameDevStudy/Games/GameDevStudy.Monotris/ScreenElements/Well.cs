@@ -38,7 +38,7 @@ namespace GameDevStudy.Monotris.ScreenElements
             _blockRectangle = new Texture2D(graphicsDevice, 1, 1);
             _blockRectangle.SetData(new[] { _blockColor });
 
-            //TODO: This is only for testing puropses
+            //TODO: This is only for testing purposes
             //Set initial state of matrix not to waste time for filling empty space
             //for (int i = 1; i < 10; i++)
             //{
