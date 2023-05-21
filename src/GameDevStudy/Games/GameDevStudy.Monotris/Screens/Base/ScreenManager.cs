@@ -7,7 +7,7 @@ namespace GameDevStudy.Monotris.Screens.Base
     {
         private IScreen _currentScreen;
         private IScreen _mainScreenCache;
-        private IScreen _gameScreenCache;
+        private IScreen _gameOverScreenCache;
         private ScreenFactory _screenFactory;
         private GraphicsDevice _graphicsDevice;
         private ContentManager _content;
@@ -39,11 +39,15 @@ namespace GameDevStudy.Monotris.Screens.Base
             }
             else if (screen == Screen.GameplayScreen)
             {
-                if (_gameScreenCache == null)
+                _currentScreen = _screenFactory.Create<GameplayScreen>(_graphicsDevice, _content);
+            }
+            else if (screen == Screen.GameOverScreen)
+            {
+                if (_gameOverScreenCache == null)
                 {
-                    _gameScreenCache = _screenFactory.Create<GameplayScreen>(_graphicsDevice, _content);
+                    _gameOverScreenCache = _screenFactory.Create<GameOverScreen>(_graphicsDevice, _content);
                 }
-                _currentScreen = _gameScreenCache;
+                _currentScreen = _gameOverScreenCache;
             }
 
             _currentScreen?.OnStart();

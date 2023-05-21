@@ -22,7 +22,8 @@ namespace GameDevStudy.Monotris.Screens
         public void Update(GameTime gameTime)
         {
             var keyBoardState = Keyboard.GetState();
-            if (keyBoardState.IsKeyDown(Keys.Enter))
+            //TODO: Handle enter key without moving its state into next screen
+            if (keyBoardState.IsKeyDown(Keys.Space))
             {
                 MonotrisGame.ScreenManager.SwitchScreen(Screen.MainScreen); 
             }

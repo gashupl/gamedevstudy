@@ -21,6 +21,7 @@ namespace GameDevStudy.Monotris.Screens
         {
             _well = new Well(graphicsDevice);
             _well.OnLineRemoved += (point) => _score.Add(point);
+            _well.OnGameOver += () => MonotrisGame.ScreenManager.SwitchScreen(Screen.GameOverScreen);
             _scoreText = new ScoreText(content, new Vector2(MonotrisGame.GameResolutionWidth - 100, 0));
         }
 
