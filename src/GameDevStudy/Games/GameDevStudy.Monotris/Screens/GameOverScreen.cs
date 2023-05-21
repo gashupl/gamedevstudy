@@ -11,10 +11,12 @@ namespace GameDevStudy.Monotris.Screens
     {
         private Vector2 _gameOverTextPosition = new Vector2(100, 100);
         private SpriteFont _gameOverFont;
+        private bool _goToMainScreen = false;
 
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
             this.graphicsDevice = graphicsDevice;
+            _goToMainScreen = false; 
             _gameOverFont = content.Load<SpriteFont>(FontNames.MainScreenBigFont);
 
         }
@@ -22,9 +24,13 @@ namespace GameDevStudy.Monotris.Screens
         public void Update(GameTime gameTime)
         {
             var keyBoardState = Keyboard.GetState();
-            //TODO: Handle enter key without moving its state into next screen
-            if (keyBoardState.IsKeyDown(Keys.Space))
+            if (keyBoardState.IsKeyDown(Keys.Enter))
             {
+                _goToMainScreen = true;
+            }
+            if (_goToMainScreen && keyBoardState.IsKeyUp(Keys.Enter))
+            {
+                _goToMainScreen = false;
                 MonotrisGame.ScreenManager.SwitchScreen(Screen.MainScreen); 
             }
         }

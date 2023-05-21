@@ -45,7 +45,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             //{
             //    _matrix[i, 19] = true;
             //}
-
         }
 
         public bool IsLineCompleted
