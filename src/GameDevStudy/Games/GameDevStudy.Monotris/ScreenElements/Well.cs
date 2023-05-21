@@ -24,6 +24,7 @@ namespace GameDevStudy.Monotris.ScreenElements
         private WellCalculationService _wellCalculator;
 
         internal Action<int>? OnLineRemoved { get; set; }
+        internal Action? OnGameOver { get; set; }
 
         internal Well(GraphicsDevice graphicsDevice)
         {
@@ -44,7 +45,6 @@ namespace GameDevStudy.Monotris.ScreenElements
             //{
             //    _matrix[i, 19] = true;
             //}
-
         }
 
         public bool IsLineCompleted
@@ -106,6 +106,10 @@ namespace GameDevStudy.Monotris.ScreenElements
 
         private void SetInitialActiveBlockCoordinates()
         {
+            if(_matrix != null && _matrix[4,0] == true)
+            {
+                OnGameOver?.Invoke();
+            }
             _activeBlockX = 4;
             _activeBlockY = 0;
         }
