@@ -1,8 +1,8 @@
 ﻿using GameDevStudy.Monotris.Screens.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using GameDevStudy.Monotris.Common; 
-
+using GameDevStudy.Monotris.Common;
+using GameDevStudy.Monotris.Domain.Services;
 
 namespace GameDevStudy.Monotris
 {
@@ -51,6 +51,8 @@ namespace GameDevStudy.Monotris
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Global.ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content);
+            Global.HighScoreService = new HighScoreService(new FileWrapper());
+            Global.HighScoreService.Load(); 
         }
 
         protected override void UnloadContent()

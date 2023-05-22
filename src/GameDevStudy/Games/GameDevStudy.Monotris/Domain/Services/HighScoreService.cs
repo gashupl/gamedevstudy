@@ -39,8 +39,16 @@ namespace GameDevStudy.Monotris.Domain.Services
             try
             {
                 var jsonText = _file.ReadAllText(_fileName);
-                var deserialized = JsonSerializer.Deserialize(jsonText, typeof(IEnumerable<Score>));
-                _highScore = deserialized as IEnumerable<Score>;
+                if (!String.IsNullOrEmpty(jsonText))
+                {
+                    var deserialized = JsonSerializer.Deserialize(jsonText, typeof(IEnumerable<Score>));
+                    _highScore = deserialized as IEnumerable<Score>;
+                }
+                else
+                {
+                    _highScore = new List<Score>();
+                }
+
             }
             catch(Exception ex)
             {
