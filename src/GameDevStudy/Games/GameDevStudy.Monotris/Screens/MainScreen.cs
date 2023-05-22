@@ -51,11 +51,11 @@ namespace GameDevStudy.Monotris.Screens
             {
                 if (_selectedMenuPosition == SelectedMenuPosition.HighScore)
                 {
-                    MonotrisGame.ScreenManager.SwitchScreen(Screen.HighScoreScreen);
+                    Global.ScreenManager?.SwitchScreen(Screen.HighScoreScreen);
                 }
                 else if (_selectedMenuPosition == SelectedMenuPosition.Start)
                 {
-                    MonotrisGame.ScreenManager.SwitchScreen(Screen.GameplayScreen);
+                    Global.ScreenManager?.SwitchScreen(Screen.GameplayScreen);
                 }
             }
         }

@@ -31,7 +31,7 @@ namespace GameDevStudy.Monotris.Screens
             if (_goToMainScreen && keyBoardState.IsKeyUp(Keys.Enter))
             {
                 _goToMainScreen = false;
-                MonotrisGame.ScreenManager.SwitchScreen(Screen.MainScreen); 
+                Global.ScreenManager?.SwitchScreen(Screen.MainScreen); 
             }
         }
 
