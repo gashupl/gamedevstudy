@@ -20,6 +20,8 @@ namespace GameDevStudy.Monotris.Screens
         private Vector2 _gameStartPosition = new Vector2(150, 200);
         private Vector2 _highScorePosition = new Vector2(150, 250);
         private SelectedMenuPosition _selectedMenuPosition = SelectedMenuPosition.Start;
+        private bool _enterPressed = false; 
+
 
         private SpriteFont _titleFont;
         private SpriteFont _menuFont;
@@ -38,17 +40,22 @@ namespace GameDevStudy.Monotris.Screens
 
         public void Update(GameTime gameTime)
         {
-            var keyBoardState = Keyboard.GetState();
-            if (keyBoardState.IsKeyDown(Keys.Down))
+            var keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Down))
             {
                 _selectedMenuPosition = SelectedMenuPosition.HighScore;
             }
-            else if (keyBoardState.IsKeyDown(Keys.Up))
+            else if (keyboardState.IsKeyDown(Keys.Up))
             {
                 _selectedMenuPosition = SelectedMenuPosition.Start;
             }
-            else if (keyBoardState.IsKeyDown(Keys.Enter))
+            else if (keyboardState.IsKeyDown(Keys.Enter))
             {
+                _enterPressed = true;
+            }
+            else if (_enterPressed && keyboardState.IsKeyUp(Keys.Enter))
+            {
+                _enterPressed = false;
                 if (_selectedMenuPosition == SelectedMenuPosition.HighScore)
                 {
                     Global.ScreenManager?.SwitchScreen(Screen.HighScoreScreen);
@@ -58,6 +65,7 @@ namespace GameDevStudy.Monotris.Screens
                     Global.ScreenManager?.SwitchScreen(Screen.GameplayScreen);
                 }
             }
+
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

@@ -4,34 +4,38 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace GameDevStudy.Monotris.Screens
 {
-    internal class GameOverScreen : ScreenBase, IScreen
+    internal class HighScoreScreen : ScreenBase, IScreen
     {
-        private Vector2 _gameOverTextPosition = new Vector2(100, 100);
-        private SpriteFont _gameOverFont;
-        
+        private Vector2 _highScoreTablePosition = new Vector2(100, 100);
+        private SpriteFont _scoresFont;
 
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
             this.graphicsDevice = graphicsDevice;
-            _gameOverFont = content.Load<SpriteFont>(FontNames.MainScreenBigFont);
+            _scoresFont = content.Load<SpriteFont>(FontNames.HighScoreFont);
         }
 
         public void Update(GameTime gameTime)
         {
             var keyboardState = Keyboard.GetState();
-            GoToMainScreen(keyboardState); 
+            GoToMainScreen(keyboardState);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
 
-            if (_gameOverFont != null)
+            if (_scoresFont != null)
             {
-                spriteBatch.DrawString(_gameOverFont, $"-- GAME OVER -- ", _gameOverTextPosition, Color.DarkGreen);
+                spriteBatch.DrawString(_scoresFont, $"-- HIGH SCORE -- ", _highScoreTablePosition, Color.DarkGreen);
 
             }
             else
@@ -49,6 +53,5 @@ namespace GameDevStudy.Monotris.Screens
         public void Cleanup()
         {
         }
-
     }
 }
