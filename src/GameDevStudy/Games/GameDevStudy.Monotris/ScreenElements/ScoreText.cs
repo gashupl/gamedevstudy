@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.ScreenElements
 {
+
+    //TODO: Decide is is useful
     internal class ScoreText
     {
         private Vector2 _scorePosition;

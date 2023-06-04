@@ -17,6 +17,7 @@ namespace GameDevStudy.Monotris.Screens
         {
             this.graphicsDevice = graphicsDevice;
             _gameOverFont = content.Load<SpriteFont>(Names.Font.MainScreenBigFont);
+            backgroundImage = content.Load<Texture2D>(Names.Image.GameScreenBackground);
         }
 
         public void Update(GameTime gameTime)
@@ -28,7 +29,7 @@ namespace GameDevStudy.Monotris.Screens
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-
+            spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
             if (_gameOverFont != null)
             {
                 spriteBatch.DrawString(_gameOverFont, $"-- GAME OVER -- ", _gameOverTextPosition, Color.DarkGreen);

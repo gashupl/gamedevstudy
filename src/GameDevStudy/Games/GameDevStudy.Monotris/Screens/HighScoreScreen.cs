@@ -21,6 +21,7 @@ namespace GameDevStudy.Monotris.Screens
         {
             this.graphicsDevice = graphicsDevice;
             _scoresFont = content.Load<SpriteFont>(Names.Font.HighScoreFont);
+            backgroundImage = content.Load<Texture2D>(Names.Image.GameScreenBackground);
         }
 
         public void Update(GameTime gameTime)
@@ -31,11 +32,18 @@ namespace GameDevStudy.Monotris.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Begin();
+            var fontColor = Color.Black; 
 
+            spriteBatch.Begin();
+            spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
             if (_scoresFont != null)
             {
-                spriteBatch.DrawString(_scoresFont, $"-- HIGH SCORE -- ", _highScoreTablePosition, Color.DarkGreen);
+                spriteBatch.DrawString(_scoresFont, $"-- HIGH SCORE -- ", _highScoreTablePosition, fontColor);
+
+                for(int i = 1; i <= 10; i++)
+                {
+                    spriteBatch.DrawString(_scoresFont, $"USER { i.ToString("00") } 000000", new Vector2(110, 120 + 20 * i), fontColor);
+                }
 
             }
             else
