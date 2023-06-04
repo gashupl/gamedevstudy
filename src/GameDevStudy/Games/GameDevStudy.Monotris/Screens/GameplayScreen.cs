@@ -24,6 +24,7 @@ namespace GameDevStudy.Monotris.Screens
             _well.OnLineRemoved += (point) => _score.Add(point);
             _well.OnGameOver += () => Global.ScreenManager?.SwitchScreen(Screen.GameOverScreen);
             _scoreText = new ScoreText(content, new Vector2(MonotrisGame.GameResolutionWidth - 100, 0));
+            backgroundImage = content.Load<Texture2D>(Names.Image.GameScreenBackground);
         }
 
         public void UnLoadContent()
@@ -36,6 +37,7 @@ namespace GameDevStudy.Monotris.Screens
             if (spriteBatch != null)
             {
                 spriteBatch.Begin();
+                spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
                 _well.Draw(spriteBatch, gameTime);
 
                 _scoreText.Draw(_score.Result, spriteBatch, gameTime);

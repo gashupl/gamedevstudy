@@ -16,7 +16,7 @@ namespace GameDevStudy.Monotris.Screens
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
             this.graphicsDevice = graphicsDevice;
-            _gameOverFont = content.Load<SpriteFont>(FontNames.MainScreenBigFont);
+            _gameOverFont = content.Load<SpriteFont>(Names.Font.MainScreenBigFont);
         }
 
         public void Update(GameTime gameTime)

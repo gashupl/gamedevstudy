@@ -32,9 +32,10 @@ namespace GameDevStudy.Monotris.Screens
             this.graphicsDevice = graphicsDevice;
            //OnWindowSizeChanged();
 
-            _titleFont = content.Load<SpriteFont>(FontNames.MainScreenBigFont);
-            _menuFont = content.Load<SpriteFont>(FontNames.MainScreenSmallFont);
+            _titleFont = content.Load<SpriteFont>(Names.Font.MainScreenBigFont);
+            _menuFont = content.Load<SpriteFont>(Names.Font.MainScreenSmallFont);
 
+            backgroundImage = content.Load<Texture2D>(Names.Image.MainScreenBackground); 
             _backgroundMusic = content.Load<Song>(SoundPaths.TitleScreenMusic);
         }
 
@@ -74,6 +75,7 @@ namespace GameDevStudy.Monotris.Screens
 
             if (_titleFont != null)
             {
+                spriteBatch.Draw(backgroundImage, new Vector2(0,0), Color.White);
                 spriteBatch.DrawString(_titleFont, $"-- Monotris -- ", _titlePosition, Color.DarkGreen);
 
                 var startTextColor = _selectedMenuPosition == SelectedMenuPosition.Start ? Color.Yellow : Color.Black;

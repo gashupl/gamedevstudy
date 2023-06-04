@@ -20,7 +20,7 @@ namespace GameDevStudy.Monotris.Screens
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
             this.graphicsDevice = graphicsDevice;
-            _scoresFont = content.Load<SpriteFont>(FontNames.HighScoreFont);
+            _scoresFont = content.Load<SpriteFont>(Names.Font.HighScoreFont);
         }
 
         public void Update(GameTime gameTime)

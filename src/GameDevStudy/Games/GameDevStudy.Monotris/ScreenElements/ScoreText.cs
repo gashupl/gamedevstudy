@@ -14,7 +14,7 @@ namespace GameDevStudy.Monotris.ScreenElements
 
         internal ScoreText(ContentManager content, Vector2 position)
         {
-            _scoreFont = content.Load<SpriteFont>(FontNames.HighScoreFont);
+            _scoreFont = content.Load<SpriteFont>(Names.Font.HighScoreFont);
             _scorePosition = position;
         }
 

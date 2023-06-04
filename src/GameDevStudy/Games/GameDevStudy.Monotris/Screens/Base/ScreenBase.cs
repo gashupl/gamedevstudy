@@ -10,7 +10,7 @@ namespace GameDevStudy.Monotris.Screens
         private bool _goToMainScreen = false;
 
         protected GraphicsDevice graphicsDevice { get; set; }
-        protected Texture2D _backgroundTexture { get; set; }
+        protected Texture2D backgroundImage { get; set; }
 
         protected void GoToMainScreen(KeyboardState keyboardState)
         {
