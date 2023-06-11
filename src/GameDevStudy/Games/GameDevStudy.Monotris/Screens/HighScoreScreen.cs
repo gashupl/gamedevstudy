@@ -4,11 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace GameDevStudy.Monotris.Screens
 {
@@ -16,12 +12,24 @@ namespace GameDevStudy.Monotris.Screens
     {
         private Vector2 _highScoreTablePosition = new Vector2(100, 100);
         private SpriteFont _scoresFont;
+        private string _savedScoresText; 
 
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
         {
             this.graphicsDevice = graphicsDevice;
             _scoresFont = content.Load<SpriteFont>(Names.Font.HighScoreFont);
             backgroundImage = content.Load<Texture2D>(Names.Image.GameScreenBackground);
+            var _highScore = Global.HighScoreService?.HighScore; 
+            if (_highScore != null)
+            {
+                var resultsBuilder = new StringBuilder();
+                foreach (var score in _highScore)
+                {
+                    resultsBuilder.AppendLine($"{score.PlayerName} : {score.Result.ToString("000000")}");
+                }
+                _savedScoresText = resultsBuilder.ToString(); 
+            }
+            
         }
 
         public void Update(GameTime gameTime)
@@ -40,10 +48,8 @@ namespace GameDevStudy.Monotris.Screens
             {
                 spriteBatch.DrawString(_scoresFont, $"-- HIGH SCORE -- ", _highScoreTablePosition, fontColor);
 
-                for(int i = 1; i <= 10; i++)
-                {
-                    spriteBatch.DrawString(_scoresFont, $"USER { i.ToString("00") } 000000", new Vector2(110, 120 + 20 * i), fontColor);
-                }
+
+                spriteBatch.DrawString(_scoresFont, _savedScoresText, new Vector2(140, 140), fontColor);
 
             }
             else

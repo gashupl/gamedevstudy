@@ -8,7 +8,7 @@
         public int Result 
         { 
             get { return _result;} 
-            private set { _result = value; } 
+            set { _result = value; } 
         }  
 
         public void Add(int points)
