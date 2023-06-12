@@ -11,11 +11,15 @@ namespace GameDevStudy.Monotris.Screens
     {
         private Vector2 _gameOverTextPosition = new Vector2(100, 100);
         private SpriteFont _gameOverFont;
-        
+        private GameWindow _window;
+        private string _playerName;
+
+
 
         public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             this.graphicsDevice = graphicsDevice;
+            _window = window; 
             _gameOverFont = content.Load<SpriteFont>(Names.Font.MainScreenBigFont);
             backgroundImage = content.Load<Texture2D>(Names.Image.GameScreenBackground);
         }
@@ -45,10 +49,27 @@ namespace GameDevStudy.Monotris.Screens
 
         public void OnStart()
         {
+            _window.TextInput += TextInputHandler;
         }
 
         public void Cleanup()
         {
+            _window.TextInput -= TextInputHandler;
+        }
+
+        private void TextInputHandler(object? sender, TextInputEventArgs args)
+        {
+            if (_playerName.Length < 4)
+            {
+                _playerName += args.Character;
+            }
+            else
+            {
+                if (args.Key == Keys.Enter)
+                {
+                    //TODO: Go to high score screen
+                }
+            }
         }
 
     }
