@@ -27,7 +27,7 @@ namespace GameDevStudy.Monotris.Screens
         private SpriteFont _menuFont;
         private Song _backgroundMusic;
 
-        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
+        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             this.graphicsDevice = graphicsDevice;
            //OnWindowSizeChanged();

@@ -13,7 +13,7 @@ namespace GameDevStudy.Monotris.Screens
         private SpriteFont _gameOverFont;
         
 
-        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
+        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             this.graphicsDevice = graphicsDevice;
             _gameOverFont = content.Load<SpriteFont>(Names.Font.MainScreenBigFont);

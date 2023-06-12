@@ -29,7 +29,7 @@ namespace GameDevStudy.Monotris
 
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-            Window.AllowAltF4 = true;           
+            Window.AllowAltF4 = true;    
         }
 
         protected override void Initialize()
@@ -44,13 +44,13 @@ namespace GameDevStudy.Monotris
 
             base.Initialize();
        
-            Global.ScreenManager?.CurrentScreen.Initialize(GraphicsDevice, Content);           
+            Global.ScreenManager?.CurrentScreen.Initialize(GraphicsDevice, Content, Window);           
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            Global.ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content);
+            Global.ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content, Window);
             Global.HighScoreService = new HighScoreService(new FileWrapper());
             Global.HighScoreService.Load(); 
         }

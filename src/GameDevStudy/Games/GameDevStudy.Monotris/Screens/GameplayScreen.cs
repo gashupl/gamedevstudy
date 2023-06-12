@@ -18,7 +18,7 @@ namespace GameDevStudy.Monotris.Screens
         private DateTime _lastUpdate = DateTime.Now;
         private DateTime _lastMove = DateTime.Now;
 
-        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
+        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             _well = new Well(graphicsDevice);
             _well.OnLineRemoved += (point) => _score.Add(point);

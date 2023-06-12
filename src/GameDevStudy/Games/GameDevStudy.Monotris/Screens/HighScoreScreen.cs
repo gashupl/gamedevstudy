@@ -14,7 +14,7 @@ namespace GameDevStudy.Monotris.Screens
         private SpriteFont _scoresFont;
         private string _savedScoresText; 
 
-        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
+        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             this.graphicsDevice = graphicsDevice;
             _scoresFont = content.Load<SpriteFont>(Names.Font.HighScoreFont);

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevStudy.Monotris.Screens.Base
@@ -12,12 +13,14 @@ namespace GameDevStudy.Monotris.Screens.Base
         private ScreenFactory _screenFactory;
         private GraphicsDevice _graphicsDevice;
         private ContentManager _content;
+        private GameWindow _window; 
 
-        public ScreenManager(Screen initialScreen, GraphicsDevice graphicsDevice, ContentManager content)
+        public ScreenManager(Screen initialScreen, GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             _screenFactory = new ScreenFactory();
             _graphicsDevice = graphicsDevice;
             _content = content;
+            _window = window; 
             SwitchScreen(initialScreen);
         }
 
@@ -34,19 +37,19 @@ namespace GameDevStudy.Monotris.Screens.Base
             {
                 if (_mainScreenCache == null)
                 {
-                    _mainScreenCache = _screenFactory.Create<MainScreen>(_graphicsDevice, _content);
+                    _mainScreenCache = _screenFactory.Create<MainScreen>(_graphicsDevice, _content, _window);
                 }
                 _currentScreen = _mainScreenCache;
             }
             else if (screen == Screen.GameplayScreen)
             {
-                _currentScreen = _screenFactory.Create<GameplayScreen>(_graphicsDevice, _content);
+                _currentScreen = _screenFactory.Create<GameplayScreen>(_graphicsDevice, _content, _window);
             }
             else if (screen == Screen.HighScoreScreen)
             {
                 if (_highScoreScreen == null)
                 {
-                    _highScoreScreen = _screenFactory.Create<HighScoreScreen>(_graphicsDevice, _content);
+                    _highScoreScreen = _screenFactory.Create<HighScoreScreen>(_graphicsDevice, _content, _window);
                 }
                 _currentScreen = _highScoreScreen;
             }
@@ -54,7 +57,7 @@ namespace GameDevStudy.Monotris.Screens.Base
             {
                 if (_gameOverScreenCache == null)
                 {
-                    _gameOverScreenCache = _screenFactory.Create<GameOverScreen>(_graphicsDevice, _content);
+                    _gameOverScreenCache = _screenFactory.Create<GameOverScreen>(_graphicsDevice, _content, _window);
                 }
                 _currentScreen = _gameOverScreenCache;
             }
