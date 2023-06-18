@@ -23,6 +23,8 @@ namespace GameDevStudy.Monotris.Domain.Services
             private set { _highScore = value; }
         }
 
+        public Score CurrentScore { get; set; }
+
         public HighScoreService(IFileWrapper file)
         {
             _file = file; 
@@ -80,6 +82,13 @@ namespace GameDevStudy.Monotris.Domain.Services
             scoresList.Add(score);
             _highScore = scoresList.OrderByDescending(s => s.Result);
 
+            //TODO: If score count is more than 10 - remove smaller one
+
+        }
+
+        public bool ShouldScoreBeSaved(Score score)
+        {
+            throw new NotImplementedException();
         }
 
     }
