@@ -9,6 +9,7 @@ namespace GameDevStudy.Monotris.Domain.Services
         private readonly IFileWrapper _file;
         private IEnumerable<Score>? _highScore;
         private const string _fileName = ".scores";
+        private const int _maxScoreCount = 10; 
 
         public IEnumerable<Score>? HighScore
         {
@@ -88,7 +89,21 @@ namespace GameDevStudy.Monotris.Domain.Services
 
         public bool ShouldScoreBeSaved(Score score)
         {
-            throw new NotImplementedException();
+            if (_highScore == null)
+            {
+                Load();
+            }
+
+            if (_highScore?.Count() < _maxScoreCount) { 
+                return true; //Always add new score in case number of results is less then max nuber
+            }
+
+            var minResult = _highScore?.Select(s => s.Result).ToList().Min();
+            if (score.Result > minResult)
+            {
+                return true; 
+            }
+            return false; 
         }
 
     }

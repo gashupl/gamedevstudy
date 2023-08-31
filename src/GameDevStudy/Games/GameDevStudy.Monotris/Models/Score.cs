@@ -2,18 +2,13 @@
 {
     internal class Score
     {
-        private int _result = 0; 
 
         public string? PlayerName { get; set; }
-        public int Result 
-        { 
-            get { return _result;} 
-            set { _result = value; } 
-        }  
+        public int Result { get; set; } = 0;  
 
         public void Add(int points)
         {
-            _result += points;
+            Result += points;
         }
     }
 }
