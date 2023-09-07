@@ -1,6 +1,7 @@
 ﻿using GameDevStudy.Monotris.Domain.Exceptions;
 using GameDevStudy.Monotris.Models;
 using System.Text.Json;
+using System.Linq; 
 
 namespace GameDevStudy.Monotris.Domain.Services
 {
@@ -83,8 +84,13 @@ namespace GameDevStudy.Monotris.Domain.Services
             scoresList.Add(score);
             _highScore = scoresList.OrderByDescending(s => s.Result);
 
-            //TODO: If score count is more than 10 - remove smaller one
-
+            if(_highScore.Count() > _maxScoreCount)
+            {
+                //Remove the smallest result
+                scoresList = _highScore.ToList();  ;
+                scoresList.RemoveAt(_highScore.Count() - 1);
+                _highScore = scoresList; 
+            }
         }
 
         public bool ShouldScoreBeSaved(Score score)

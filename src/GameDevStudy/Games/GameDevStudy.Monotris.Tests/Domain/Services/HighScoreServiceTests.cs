@@ -95,7 +95,22 @@ namespace GameDevStudy.Monotris.Tests.Domain.Services
                 () => Assert.Equal(newPlayerName, service.HighScore?.ToList()[1].PlayerName),
                 () => Assert.Equal(_player2Name, service.HighScore?.ToList()[2].PlayerName),
                 () => Assert.Equal(_player1Name, service.HighScore?.ToList()[3].PlayerName));
+        }
 
+        [Fact]
+        public void AddScore_ListOver10Elements_RemoveLastOne()
+        {
+            var expectedName = "Player X"; 
+            List<Score> scores = GetFullScoresTable();
+            var file = new Mock<IFileWrapper>();
+            var service = new HighScoreService(file.Object, scores);
+
+            service.AddScore(new Score { PlayerName = expectedName, Result = 250 });
+
+            Assert.Multiple(
+                () => Assert.Equal(10, service.HighScore?.Count()),
+                () => Assert.Equal(expectedName, service.HighScore?.ToList()[8].PlayerName),
+                () => Assert.Equal("Player 08", service.HighScore?.ToList()[9].PlayerName));
         }
 
         [Fact]
