@@ -7,6 +7,7 @@ namespace GameDevStudy.Monotris.Common
     internal class Global
     {
         internal static ScreenManager? ScreenManager;
-        internal static HighScoreService? HighScoreService;  
+        internal static HighScoreService? HighScoreService;
+        internal static Score CurrentScore; 
     }
 }
