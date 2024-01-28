@@ -46,11 +46,7 @@ namespace GameDevStudy.Monotris.Screens.Base
             }
             else if (screen == Screen.HighScoreScreen)
             {
-                if (_highScoreScreen == null)
-                {
-                    _highScoreScreen = _screenFactory.Create<HighScoreScreen>(_graphicsDevice, _content, _window);
-                }
-                _currentScreen = _highScoreScreen;
+                _currentScreen = _highScoreScreen = _screenFactory.Create<HighScoreScreen>(_graphicsDevice, _content, _window);
             }
             else if (screen == Screen.GameOverScreen)
             {
