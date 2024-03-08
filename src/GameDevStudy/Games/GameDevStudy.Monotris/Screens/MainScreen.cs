@@ -20,44 +20,53 @@ namespace GameDevStudy.Monotris.Screens
         private Vector2 _gameStartPosition = new Vector2(150, 200);
         private Vector2 _highScorePosition = new Vector2(150, 250);
         private SelectedMenuPosition _selectedMenuPosition = SelectedMenuPosition.Start;
+        private bool _enterPressed = false; 
+
 
         private SpriteFont _titleFont;
         private SpriteFont _menuFont;
         private Song _backgroundMusic;
 
-        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
+        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
             this.graphicsDevice = graphicsDevice;
            //OnWindowSizeChanged();
 
-            _titleFont = content.Load<SpriteFont>(FontNames.MainScreenBigFont);
-            _menuFont = content.Load<SpriteFont>(FontNames.MainScreenSmallFont);
+            _titleFont = content.Load<SpriteFont>(Names.Font.MainScreenBigFont);
+            _menuFont = content.Load<SpriteFont>(Names.Font.MainScreenSmallFont);
 
+            backgroundImage = content.Load<Texture2D>(Names.Image.MainScreenBackground); 
             _backgroundMusic = content.Load<Song>(SoundPaths.TitleScreenMusic);
         }
 
         public void Update(GameTime gameTime)
         {
-            var keyBoardState = Keyboard.GetState();
-            if (keyBoardState.IsKeyDown(Keys.Down))
+            var keyboardState = Keyboard.GetState();
+            if (keyboardState.IsKeyDown(Keys.Down))
             {
                 _selectedMenuPosition = SelectedMenuPosition.HighScore;
             }
-            else if (keyBoardState.IsKeyDown(Keys.Up))
+            else if (keyboardState.IsKeyDown(Keys.Up))
             {
                 _selectedMenuPosition = SelectedMenuPosition.Start;
             }
-            else if (keyBoardState.IsKeyDown(Keys.Enter))
+            else if (keyboardState.IsKeyDown(Keys.Enter))
             {
+                _enterPressed = true;
+            }
+            else if (_enterPressed && keyboardState.IsKeyUp(Keys.Enter))
+            {
+                _enterPressed = false;
                 if (_selectedMenuPosition == SelectedMenuPosition.HighScore)
                 {
-                    MonotrisGame.ScreenManager.SwitchScreen(Screen.HighScoreScreen);
+                    Global.ScreenManager?.SwitchScreen(Screen.HighScoreScreen);
                 }
                 else if (_selectedMenuPosition == SelectedMenuPosition.Start)
                 {
-                    MonotrisGame.ScreenManager.SwitchScreen(Screen.GameplayScreen);
+                    Global.ScreenManager?.SwitchScreen(Screen.GameplayScreen);
                 }
             }
+
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -66,6 +75,7 @@ namespace GameDevStudy.Monotris.Screens
 
             if (_titleFont != null)
             {
+                spriteBatch.Draw(backgroundImage, new Vector2(0,0), Color.White);
                 spriteBatch.DrawString(_titleFont, $"-- Monotris -- ", _titlePosition, Color.DarkGreen);
 
                 var startTextColor = _selectedMenuPosition == SelectedMenuPosition.Start ? Color.Yellow : Color.Black;

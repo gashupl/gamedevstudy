@@ -22,4 +22,10 @@
 	  </AssemblyAttribute>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update=".scores">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

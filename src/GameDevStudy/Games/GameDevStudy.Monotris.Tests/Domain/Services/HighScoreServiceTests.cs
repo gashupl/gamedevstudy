@@ -95,7 +95,93 @@ namespace GameDevStudy.Monotris.Tests.Domain.Services
                 () => Assert.Equal(newPlayerName, service.HighScore?.ToList()[1].PlayerName),
                 () => Assert.Equal(_player2Name, service.HighScore?.ToList()[2].PlayerName),
                 () => Assert.Equal(_player1Name, service.HighScore?.ToList()[3].PlayerName));
+        }
 
+        [Fact]
+        public void AddScore_ListOver10Elements_RemoveLastOne()
+        {
+            var expectedName = "Player X"; 
+            List<Score> scores = GetFullScoresTable();
+            var file = new Mock<IFileWrapper>();
+            var service = new HighScoreService(file.Object, scores);
+
+            service.AddScore(new Score { PlayerName = expectedName, Result = 250 });
+
+            Assert.Multiple(
+                () => Assert.Equal(10, service.HighScore?.Count()),
+                () => Assert.Equal(expectedName, service.HighScore?.ToList()[8].PlayerName),
+                () => Assert.Equal("Player 08", service.HighScore?.ToList()[9].PlayerName));
+        }
+
+        [Fact]
+        public void ShouldScoreBeSaved_GreaterThenMin_ReturnTrue()
+        {
+            List<Score> scores = GetFullScoresTable(); 
+            var file = new Mock<IFileWrapper>();
+            var service = new HighScoreService(file.Object, scores);
+
+            var score = new Score { PlayerName = "Player X", Result = 101 };
+
+            var result = service.ShouldScoreBeSaved(score); 
+            Assert.True(result); 
+        }
+
+
+        [Fact]
+        public void ShouldScoreBeSaved_EqualMin_ReturnFalse()
+        {
+            List<Score> scores = GetFullScoresTable();
+            var file = new Mock<IFileWrapper>();
+            var service = new HighScoreService(file.Object, scores);
+
+            var score = new Score { PlayerName = "Player X", Result = 100 };
+
+            var result = service.ShouldScoreBeSaved(score);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void ShouldScoreBeSaved_LowerThenMin_ReturnFalse()
+        {
+            List<Score> scores = GetFullScoresTable();
+            var file = new Mock<IFileWrapper>();
+            var service = new HighScoreService(file.Object, scores);
+
+            var score = new Score { PlayerName = "Player X", Result = 99 };
+
+            var result = service.ShouldScoreBeSaved(score);
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void ShouldScoreBeSaved_ScoresNumberLessThenMax_ReturnTrue()
+        {
+            List<Score> scores = GetFullScoresTable();
+            scores.RemoveAt(9); //Makes list has a 9 records only
+
+            var file = new Mock<IFileWrapper>();
+            var service = new HighScoreService(file.Object, scores);
+
+            var score = new Score { PlayerName = "Player X", Result = 99 };
+
+            var result = service.ShouldScoreBeSaved(score);
+            Assert.True(result);
+        }
+
+        private List<Score> GetFullScoresTable()
+        {
+            return new List<Score>() {
+                new Score { PlayerName = "Player 01", Result = 1000 },
+                new Score { PlayerName = "Player 02", Result = 900 },
+                new Score { PlayerName = "Player 03", Result = 800 },
+                new Score { PlayerName = "Player 04", Result = 700 },
+                new Score { PlayerName = "Player 05", Result = 600 },
+                new Score { PlayerName = "Player 06", Result = 500 },
+                new Score { PlayerName = "Player 07", Result = 100 },
+                new Score { PlayerName = "Player 08", Result = 200 },
+                new Score { PlayerName = "Player 09", Result = 300 },
+                new Score { PlayerName = "Player 10", Result = 400 },
+            };
         }
 
     }

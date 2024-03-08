@@ -6,7 +6,7 @@ namespace GameDevStudy.Monotris.Screens.Base
 {
     internal interface IScreen
     {
-        void Initialize(GraphicsDevice graphicsDevice, ContentManager content);
+        void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window);
 
         void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 

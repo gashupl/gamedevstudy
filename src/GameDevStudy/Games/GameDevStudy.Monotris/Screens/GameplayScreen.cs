@@ -1,4 +1,5 @@
-﻿using GameDevStudy.Monotris.Models;
+﻿using GameDevStudy.Monotris.Common;
+using GameDevStudy.Monotris.Models;
 using GameDevStudy.Monotris.ScreenElements;
 using GameDevStudy.Monotris.Screens.Base;
 using Microsoft.Xna.Framework;
@@ -11,18 +12,19 @@ namespace GameDevStudy.Monotris.Screens
     internal class GameplayScreen : ScreenBase, IScreen
     {
         private Well _well;
-        private Score _score = new Score();
         private ScoreText _scoreText;
 
         private DateTime _lastUpdate = DateTime.Now;
         private DateTime _lastMove = DateTime.Now;
 
-        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content)
+        public void Initialize(GraphicsDevice graphicsDevice, ContentManager content, GameWindow window)
         {
+            Global.CurrentScore = new Score(); 
             _well = new Well(graphicsDevice);
-            _well.OnLineRemoved += (point) => _score.Add(point);
-            _well.OnGameOver += () => MonotrisGame.ScreenManager.SwitchScreen(Screen.GameOverScreen);
+            _well.OnLineRemoved += (point) => Global.CurrentScore.Add(point);
+            _well.OnGameOver += () => Global.ScreenManager?.SwitchScreen(Screen.GameOverScreen);
             _scoreText = new ScoreText(content, new Vector2(MonotrisGame.GameResolutionWidth - 100, 0));
+            backgroundImage = content.Load<Texture2D>(Names.Image.GameScreenBackground);
         }
 
         public void UnLoadContent()
@@ -35,9 +37,10 @@ namespace GameDevStudy.Monotris.Screens
             if (spriteBatch != null)
             {
                 spriteBatch.Begin();
+                spriteBatch.Draw(backgroundImage, new Vector2(0, 0), Color.White);
                 _well.Draw(spriteBatch, gameTime);
 
-                _scoreText.Draw(_score.Result, spriteBatch, gameTime);
+                _scoreText.Draw(Global.CurrentScore.Result, spriteBatch, gameTime);
 
                 spriteBatch.End();
             }

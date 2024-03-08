@@ -4,6 +4,10 @@
     {
         public string ReadAllText(string file)
         {
+            if (!File.Exists(file))
+            {
+                using (File.Create(file)); 
+            }
             return File.ReadAllText(file);
         }
 

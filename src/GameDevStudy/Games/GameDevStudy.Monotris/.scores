@@ -1,0 +1,14 @@
+﻿[
+    {
+        "PlayerName": "ABC",
+        "Result": 100
+    },
+    {
+        "PlayerName": "XYZ",
+        "Result": 150
+    },
+    {
+        "PlayerName": "HEY",
+        "Result": 300
+    }
+]

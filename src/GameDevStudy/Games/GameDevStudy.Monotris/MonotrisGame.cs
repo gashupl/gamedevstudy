@@ -1,13 +1,13 @@
 ﻿using GameDevStudy.Monotris.Screens.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
+using GameDevStudy.Monotris.Common;
+using GameDevStudy.Monotris.Domain.Services;
 
 namespace GameDevStudy.Monotris
 {
     public class MonotrisGame : Game
-    {
-        internal static ScreenManager ScreenManager; 
+    {      
         internal static int GameResolutionWidth = 1280; //1920;
         internal static int GameResolutionHeigth = 800; //1080;
 
@@ -29,7 +29,7 @@ namespace GameDevStudy.Monotris
 
             IsMouseVisible = true;
             Window.AllowUserResizing = true;
-            Window.AllowAltF4 = true;           
+            Window.AllowAltF4 = true;    
         }
 
         protected override void Initialize()
@@ -44,13 +44,15 @@ namespace GameDevStudy.Monotris
 
             base.Initialize();
        
-            ScreenManager.CurrentScreen.Initialize(GraphicsDevice, Content);           
+            Global.ScreenManager?.CurrentScreen.Initialize(GraphicsDevice, Content, Window);           
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content);
+            Global.ScreenManager = new ScreenManager(Screen.MainScreen, GraphicsDevice, Content, Window);
+            Global.HighScoreService = new HighScoreService(new FileWrapper());
+            Global.HighScoreService.Load(); 
         }
 
         protected override void UnloadContent()
@@ -62,7 +64,7 @@ namespace GameDevStudy.Monotris
         protected override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            ScreenManager.CurrentScreen.Update(gameTime);
+            Global.ScreenManager?.CurrentScreen.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -70,7 +72,7 @@ namespace GameDevStudy.Monotris
             GraphicsDevice.Clear(Color.DarkGray);
             base.Draw(gameTime);
 
-            ScreenManager.CurrentScreen.Draw(_spriteBatch, gameTime); 
+            Global.ScreenManager?.CurrentScreen.Draw(_spriteBatch, gameTime); 
  
         }
     }
