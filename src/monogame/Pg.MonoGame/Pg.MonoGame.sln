@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34511.84
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Learn", "Learn", "{0D21BA4F-FA1F-46B3-A3CC-1E0E0E837D56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pg.MonoGame.Learn.ScreensNavigation", "Learn\Pg.MonoGame.Learn.ScreensNavigation\Pg.MonoGame.Learn.ScreensNavigation.csproj", "{518D02CC-7102-4965-86E8-C09CB4F39999}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{518D02CC-7102-4965-86E8-C09CB4F39999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{518D02CC-7102-4965-86E8-C09CB4F39999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{518D02CC-7102-4965-86E8-C09CB4F39999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{518D02CC-7102-4965-86E8-C09CB4F39999}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{518D02CC-7102-4965-86E8-C09CB4F39999} = {0D21BA4F-FA1F-46B3-A3CC-1E0E0E837D56}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3725F591-E5E4-4890-854C-EB0D8461D9D6}
+	EndGlobalSection
+EndGlobal
