@@ -1,19 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using Pg.MonoGame.Learn.ScreensNavigation.Screens;
 
 namespace Pg.MonoGame.Learn.ScreensNavigation
 {
-    public class Game1 : Game
+    public class MyGame : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private ScreenManager _screenManager;
 
-        public Game1()
+        public MyGame()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+          
         }
 
         protected override void Initialize()
@@ -26,16 +28,15 @@ namespace Pg.MonoGame.Learn.ScreensNavigation
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+            var defaultFont = Content.Load<SpriteFont>("MyFont");
+            _screenManager = new ScreenManager(_graphics, _spriteBatch, defaultFont);
 
-            // TODO: use this.Content to load your game content here
+            
         }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
-            // TODO: Add your update logic here
+            _screenManager.CurrentScreen.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -43,10 +44,10 @@ namespace Pg.MonoGame.Learn.ScreensNavigation
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
+
+            //TODO: Verify why text is not being drawn on the screen when code is called from current screen?
+            _screenManager.CurrentScreen.Draw(gameTime);
         }
     }
 }
