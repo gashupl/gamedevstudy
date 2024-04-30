@@ -1,24 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 
 namespace Pg.MonoGame.Learn.ScreensNavigation.Screens
 {
-    internal class Screen2 : ScreenBase, IScreen
+    internal class Screen2 : ScreenBase
     {
-        internal Screen2(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, SpriteFont defaultFont, ScreenManager screenManager)
-            : base(graphics, spriteBatch, defaultFont, screenManager)
+        public Screen2(MyGame game) : base(game)
         {
         }
 
-        public void Draw(GameTime gameTime)
+        public  override void Draw(GameTime gameTime)
         {
-            throw new NotImplementedException();
-        }
+            game.graphics.GraphicsDevice.Clear(Color.Blue);
 
-        public void Update(GameTime gameTime)
-        {
-            throw new NotImplementedException();
+            game.spriteBatch.Begin();
+            game.spriteBatch.DrawString(game.defaultFont, "-- Screen 2 -- ", new Vector2(10, 10), Color.White);
+            game.spriteBatch.End();
         }
     }
 }

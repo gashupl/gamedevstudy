@@ -1,21 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Pg.MonoGame.Learn.ScreensNavigation.Screens;
+using System.Drawing;
 
 namespace Pg.MonoGame.Learn.ScreensNavigation
 {
     public class MyGame : Game
     {
-        private GraphicsDeviceManager _graphics;
-        private SpriteBatch _spriteBatch;
+        public SpriteBatch spriteBatch;
+        public SpriteFont defaultFont;
+        public GraphicsDeviceManager graphics;
+        
         private ScreenManager _screenManager;
 
         public MyGame()
         {
-            _graphics = new GraphicsDeviceManager(this);
+            graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-          
+
+            _screenManager = new ScreenManager(this);
         }
 
         protected override void Initialize()
@@ -27,11 +31,8 @@ namespace Pg.MonoGame.Learn.ScreensNavigation
 
         protected override void LoadContent()
         {
-            _spriteBatch = new SpriteBatch(GraphicsDevice);
-            var defaultFont = Content.Load<SpriteFont>("MyFont");
-            _screenManager = new ScreenManager(_graphics, _spriteBatch, defaultFont);
-
-            
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            defaultFont = Content.Load<SpriteFont>("MyFont");        
         }
 
         protected override void Update(GameTime gameTime)
@@ -43,11 +44,9 @@ namespace Pg.MonoGame.Learn.ScreensNavigation
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            base.Draw(gameTime);
+            //graphics.GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.Black);
 
-            //TODO: Verify why text is not being drawn on the screen when code is called from current screen?
-            _screenManager.CurrentScreen.Draw(gameTime);
+            base.Draw(gameTime);
         }
     }
 }

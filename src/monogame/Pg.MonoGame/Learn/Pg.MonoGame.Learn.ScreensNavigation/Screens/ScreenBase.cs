@@ -3,19 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pg.MonoGame.Learn.ScreensNavigation.Screens
 {
-    internal class ScreenBase
+    public class ScreenBase : DrawableGameComponent
     {
-        protected GraphicsDeviceManager graphics;
-        protected SpriteBatch spriteBatch;
-        protected ScreenManager screenManager;
-        protected SpriteFont defaultFont;
+        protected MyGame game;
 
-        internal ScreenBase(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, SpriteFont defaultFont, ScreenManager screenManager)
+        public ScreenBase(MyGame game) : base(game)
         {
-            this.graphics = graphics;
-            this.spriteBatch = spriteBatch;
-            this.defaultFont = defaultFont;
-            this.screenManager = screenManager; 
+            this.game = game;
         }
+
     }
 }

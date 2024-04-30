@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,19 +6,20 @@ namespace Pg.MonoGame.Learn.ScreensNavigation.Screens
 {
     internal class ScreenManager
     {
-        private readonly List<IScreen> _screens = new List<IScreen>();
-        public IScreen CurrentScreen { get; private set; }
+        private readonly List<ScreenBase> _screens = new List<ScreenBase>();
+        public ScreenBase CurrentScreen { get; private set; }
 
-        internal ScreenManager(GraphicsDeviceManager graphics, SpriteBatch spriteBatch, SpriteFont defaultFont)
+        internal ScreenManager(MyGame game)
         {
-            _screens = new List<IScreen>
+            _screens = new List<ScreenBase>
             {
-                new Screen1(graphics, spriteBatch, defaultFont, this),
-                new Screen2(graphics, spriteBatch, defaultFont, this),
-                new Screen3(graphics, spriteBatch, defaultFont, this)
+                new Screen1(game),
+                new Screen2(game),
+                new Screen3(game)
             };
 
             CurrentScreen = _screens.First(); 
+            game.Components.Add(CurrentScreen);
         }
 
         internal void NavigateToNextScreen()
